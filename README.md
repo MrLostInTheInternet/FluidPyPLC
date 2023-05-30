@@ -58,7 +58,7 @@ To view all the usage's methods use the tags ```--help``` or ```-h```.
 GPLv3
 
 # ✍️ Authors <a name = "authors"></a>
-- [MrLostInTheInternet](https://github.com/BabelDev0)
+- [MrLostInTheInternet](https://github.com/MrLostInTheInternet)
 
 <p align="center">
 <br>
