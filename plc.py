@@ -78,7 +78,6 @@ class Plc():
 
             # shift by one to the left the list of switches
             limit_switches = rotate(d.lswitch, 1)
-            print(limit_switches)
             #---------------FIRST GROUP-----------------------
             #------------------START--------------------------
             f.write('\nWHILE START = True DO\n')
@@ -157,7 +156,6 @@ class Plc():
                         f.write('\tEND_IF;\n')
                     f.write(f'\tIF {solenoids[_index_]} = True THEN\n\t')
                     convert_on_off = limit_switches[_index_][0]
-                    print(limit_switches[_index_])
                     if convert_on_off.upper() in looped_pistons:
                         for on_off in range(_index_ - 1, -1, -1):
                             if convert_on_off == limit_switches[on_off][0]:
