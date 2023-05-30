@@ -1,11 +1,10 @@
-from get_sequence import s
-from set_groups import groups_2D
-from set_switches import limit_switches
-from set_switches import limit_s_groups
+from get_sequence import Sequence
+from set_groups import Groups
+from set_switches import Switches
 from copy import deepcopy
 
 # get the number of pistons and their labels
-def pistons():
+def pistons(s):
     piston_label = []
     tmp = deepcopy(s)
     tmp = [words.replace("-", "") for words in tmp]
@@ -17,13 +16,13 @@ def pistons():
     return n_of_pistons, piston_label
 
 # function to merge the last group with the first one if it is compatible
-def merge_groups():
+def merge_groups(groups):
     seen = []
     merge = False
-    for i in range(len(groups_2D[-1])):
-        seen.append(groups_2D[-1][i][0])
-    for j in range(len(groups_2D[0])):
-        stroke = groups_2D[0][j][0]
+    for i in range(len(groups[-1])):
+        seen.append(groups[-1][i][0])
+    for j in range(len(groups[0])):
+        stroke = groups[0][j][0]
         if stroke in seen:
             merge = False
             break
@@ -32,8 +31,9 @@ def merge_groups():
     return merge
 
 # function to check if there are loops inside the sequence
-def check_for_loops():
+def check_for_loops(s):
     stroke_signed = []
+    loop = False
     for i in range(len(s)):
         stroke = s[i]
         rep = s.count(stroke)
@@ -50,7 +50,7 @@ def check_for_loops():
     return loop
 
 # function to understand which limit switches are held down from the beginning, e.g. the limit switches normally open, are closed
-def lswitch_boolean():
+def lswitch_boolean(limit_switches):
     lswitch_bool = ['TRUE',]
     seen_letter = []
     seen_switch = []
@@ -69,13 +69,18 @@ def lswitch_boolean():
 
 # stored data
 class Data():
-    def __init__(self):
+    def __init__(self, s):
+        self.run(s)
+
+    def run(self, s):
         self.sequence = s
-        self.groups = groups_2D
-        self.lswitch = limit_switches
-        self.lswitch_groups = limit_s_groups
-        self.loop = check_for_loops()
-        self.merge = merge_groups()
-        self.number_of_pistons = pistons()[0]
-        self.pistons_labels = pistons()[1]
-        self.lswitch_bool = lswitch_boolean()
+        g = Groups(self.sequence)
+        sw = Switches(self.sequence, g.groups_2D)
+        self.groups = g.groups_2D
+        self.lswitch = sw.limit_switches
+        self.lswitch_groups = sw.limit_s_groups
+        self.loop = check_for_loops(self.sequence)
+        self.merge = merge_groups(g.groups_2D)
+        self.number_of_pistons = pistons(self.sequence)[0]
+        self.pistons_labels = pistons(self.sequence)[1]
+        self.lswitch_bool = lswitch_boolean(sw.limit_switches)

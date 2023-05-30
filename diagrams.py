@@ -1,30 +1,27 @@
 import matplotlib.pyplot as plt
-import os
 from data import Data
 
-d = Data()
-
 # get the x and y axis for the Fase's diagrams
-def xy_axis():
-    number_of_pistons , piston_labels = d.number_of_pistons, d.pistons_labels
-    x_axis = list(range(0, len(d.sequence) + 1))
-    y_axis = [[0 for strokes in range(len(d.sequence) + 1)] for label in range(number_of_pistons)]
+def xy_axis(number_of_pistons, pistons_labels, sequence):
+    number_of_pistons , piston_labels = number_of_pistons, pistons_labels
+    x_axis = list(range(0, len(sequence) + 1))
+    y_axis = [[0 for strokes in range(len(sequence) + 1)] for label in range(number_of_pistons)]
 
     # first loop to assign the values 1 or 0 to y axis based on each first stroke of the pistons
     for i in range(number_of_pistons):
         tmp_label = piston_labels[i]
         seen = []
-        for j in range(len(d.sequence)):
-            if tmp_label == d.sequence[j][0] and d.sequence[j][1] == '+':
+        for j in range(len(sequence)):
+            if tmp_label == sequence[j][0] and sequence[j][1] == '+':
                 if tmp_label not in seen:
-                    for z in range(len(d.sequence) + 1):
+                    for z in range(len(sequence) + 1):
                         y_axis[i][z] = 0
                     seen.append(tmp_label)
                 else:
                     break
-            elif tmp_label == d.sequence[j][0] and d.sequence[j][1] == '-':
+            elif tmp_label == sequence[j][0] and sequence[j][1] == '-':
                 if tmp_label not in seen:
-                    for z in range(len(d.sequence) + 1):
+                    for z in range(len(sequence) + 1):
                         y_axis[i][z] = 1
                     seen.append(tmp_label)
                 else:
@@ -34,9 +31,9 @@ def xy_axis():
     for i in range(number_of_pistons):
         tmp_label = piston_labels[i]
         index = 0
-        for j in range(len(d.sequence)):
-            if tmp_label == d.sequence[j][0]:
-                if d.sequence[j][1] == '+':
+        for j in range(len(sequence)):
+            if tmp_label == sequence[j][0]:
+                if sequence[j][1] == '+':
                     for z in range(index,j + 1):
                         y_axis[i][z] = 0
                     index = j + 1
@@ -50,7 +47,8 @@ def xy_axis():
     return x_axis, y_axis
 
 # draw the diagrams and save the plot as an image in the Plots folder
-def diagrams():
+def diagrams(s):
+    d = Data(s)
     number_of_pistons, labels = d.number_of_pistons, d.pistons_labels
     cell_text = [d.lswitch]
     columns = d.sequence
@@ -58,7 +56,7 @@ def diagrams():
     fig, axs = plt.subplots(nrows = number_of_pistons, ncols = 1)
     plt.get_current_fig_manager().set_window_title("Diagram's fases")
     colors = plt.rcParams["axes.prop_cycle"]()
-    x_axis, y_axis = xy_axis()
+    x_axis, y_axis = xy_axis(number_of_pistons, labels, s)
     
     try:
         for i, ax in enumerate(axs.flat):

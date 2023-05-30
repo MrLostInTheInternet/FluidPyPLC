@@ -1,8 +1,7 @@
-from get_sequence import s
 import numpy as np
 
 # function that founds the number of block in the sequence
-def number_of_blocks():
+def number_of_blocks(s):
     seen = set()
     z = 0
     for i in range(len(s)):
@@ -16,23 +15,20 @@ def number_of_blocks():
 
 # class that creates the sequence's groups
 class Groups():
-    def __init__(self):
-        self.run()
+    def __init__(self, s):
+        self.run(s)
 
-    def run(self):
-        global groups_2D
+    def run(self, s):
         seen = set()
-        n_blocks = number_of_blocks()
-        groups_2D = [[] for _ in range(n_blocks + 1)]
+        n_blocks = number_of_blocks(s)
+        self.groups_2D = [[] for _ in range(n_blocks + 1)]
         z = 0
         for i in range(len(s)):
             if s[i][0] in seen:
                 z += 1
                 seen = set()
-                groups_2D[z].append(s[i])
+                self.groups_2D[z].append(s[i])
                 seen.add(s[i][0])
             else:
-                groups_2D[z].append(s[i])
+                self.groups_2D[z].append(s[i])
                 seen.add(s[i][0])
-
-Groups()

@@ -16,11 +16,11 @@ def stroke_handler(stroke):
         return False
 
 # insert the stroke in the sequence
-def sequence_append(stroke):
+def sequence_append(stroke, s):
     s.append(stroke.upper())
         
 # continuous check of the sequence, by checking if the strokes are inserted correctly or they are repeated in the same position as the last one   
-def sequence_handler(stroke):
+def sequence_handler(stroke, s):
     if stroke.upper() not in s:
         return True
     else:
@@ -40,29 +40,25 @@ def sequence_handler(stroke):
                 return True
 
 # last check before insertion, by checking if the sequence is completed or there are pistons left in NO-START position
-def close_sequence_handler():
+def close_sequence_handler(s):
     return True if len(s)%2 == 0 else False
 
 class Sequence():
     def __init__(self):
-        global s
-        s = []
         self.run()
-
     def run(self):
+        self.s = []
         stroke = ""
         while True:
             stroke = input("Insert stroke:")
-            close_sequence = close_sequence_handler()
+            close_sequence = close_sequence_handler(self.s)
             if stroke == "/" and close_sequence:
                 break
             check_stroke = stroke_handler(stroke)
             if check_stroke:        
-                check_sequence = sequence_handler(stroke)
+                check_sequence = sequence_handler(stroke, self.s)
             if check_stroke and check_sequence:
-                sequence_append(stroke)
+                sequence_append(stroke, self.s)
             else:
                 print("Retry")
                 continue
-
-Sequence()

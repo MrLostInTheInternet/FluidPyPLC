@@ -6,8 +6,9 @@ from diagrams import diagrams
 from plc import Plc
 
 def __main__():
-    Data()
-    diagrams()
-    Plc()
+    sequence = Sequence()
+    s = sequence.s
+    diagrams(s)
+    Plc(s)
     
-__main__()
+__main__() 

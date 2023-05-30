@@ -1,12 +1,11 @@
 from data import Data
 from set_switches import rotate
 
-d = Data()
-
 class Plc():
-    def __init__(self):
-        self.run()
-    def run(self):
+    def __init__(self, s):
+        self.run(s)
+    def run(self, s):
+        d = Data(s)
         solenoids = d.sequence
         plc_groups = [[] for _ in range(len(d.groups))]
         g = len(d.groups)
@@ -52,6 +51,9 @@ class Plc():
         relay_memory_label = []
         for i in range(number_of_memories):
             relay_memory_label.append('K' + str(i))
+        
+        print(relay_memory_switches)
+        print(relay_memory_label)
         # open the plc.txt file and write the code, in ST language, on it
         dir = "./plc/plc.txt"
         with open(dir,'w') as f:
@@ -61,11 +63,17 @@ class Plc():
             for i in range(number_of_memories):
                 f.write(f'\t{relay_memory_label[i]} AT %Q* : BOOL;\n')
             #solenoids variables -------------------------------------------------
+            seen = []
             for i in range(l):
-                f.write(f'\t{solenoids[i]} AT %Q* : BOOL;\n')
+                if solenoids[i] not in seen:
+                    f.write(f'\t{solenoids[i]} AT %Q* : BOOL;\n')
+                    seen.append(solenoids[i])
             #limit switches variables --------------------------------------------
+            seen = []
             for i in range(l):
-                f.write(f'\t{d.lswitch[i]} AT %I* : BOOL;\n')
+                if d.lswitch[i] not in seen:
+                    f.write(f'\t{d.lswitch[i]} AT %I* : BOOL;\n')
+                    seen.append(d.lswitch[i])
             f.write('\tSTART : BOOL;\n')
             f.write('END_VAR\n\n')
             for i in range(number_of_memories):
@@ -253,3 +261,5 @@ class Plc():
                     f.write('END_IF;\nEND_IF;\n')
             f.write('END_WHILE\n')
             f.close()
+        self.relay_memory_labels = relay_memory_label
+        self.relay_memory_switches = relay_memory_switches
