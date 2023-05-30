@@ -157,10 +157,18 @@ class Plc():
                     f.write(f'\tIF {solenoids[_index_]} = True THEN\n\t')
                     convert_on_off = limit_switches[_index_][0]
                     if convert_on_off.upper() in looped_pistons:
+                        found = False
                         for on_off in range(_index_ - 1, -1, -1):
                             if convert_on_off == limit_switches[on_off][0]:
                                 f.write(f'\t{limit_switches[on_off]} := FALSE;\n')
+                                found = True
                                 break
+                        if not found:
+                            for on_off in range(_index_ + 1,len(limit_switches)):
+                                if convert_on_off == limit_switches[on_off][0]:
+                                    f.write(f'\t{limit_switches[on_off]} := FALSE;\n')
+                                    found = True
+                                    break    
                     else:
                         found = False
                         for on_off in range(_index_ + 1,len(limit_switches)):
