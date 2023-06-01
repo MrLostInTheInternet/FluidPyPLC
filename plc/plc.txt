@@ -4,15 +4,19 @@ VAR
 	A+ AT %Q* : BOOL;
 	B+ AT %Q* : BOOL;
 	C+ AT %Q* : BOOL;
-	C- AT %Q* : BOOL;
 	B- AT %Q* : BOOL;
+	C- AT %Q* : BOOL;
 	A- AT %Q* : BOOL;
-	a0 AT %I* : BOOL;
+	D+ AT %Q* : BOOL;
+	D- AT %Q* : BOOL;
+	d0 AT %I* : BOOL;
 	a1 AT %I* : BOOL;
 	b1 AT %I* : BOOL;
 	c1 AT %I* : BOOL;
-	c0 AT %I* : BOOL;
 	b0 AT %I* : BOOL;
+	c0 AT %I* : BOOL;
+	a0 AT %I* : BOOL;
+	d1 AT %I* : BOOL;
 	START : BOOL;
 END_VAR
 
@@ -20,18 +24,22 @@ K0 := FALSE;
 A+ := FALSE;
 B+ := FALSE;
 C+ := FALSE;
-C- := FALSE;
 B- := FALSE;
+C- := FALSE;
 A- := FALSE;
-a0 := TRUE;
+D+ := FALSE;
+D- := FALSE;
+d0 := TRUE;
 a1 := FALSE;
 b1 := FALSE;
 c1 := FALSE;
-c0 := TRUE;
 b0 := TRUE;
+c0 := TRUE;
+a0 := TRUE;
+d1 := FALSE;
 
 WHILE START = True DO
-IF START = True AND a0 = True AND K0 = False THEN
+IF START = True AND d0 = True AND K0 = False THEN
 	A+ := TRUE;
 	IF A+ = True THEN
 		a0 := FALSE;
@@ -62,37 +70,53 @@ IF K0 = True THEN
 	A+ := FALSE;
 	B+ := FALSE;
 	C+ := FALSE;
+	D- := FALSE;
 END_IF;
 
 IF c1 = True AND K0 = True THEN
-	C- := TRUE;
-	IF C- = True THEN
-		c1 := FALSE;
-		c0 := TRUE;
-	END_IF;
-	IF c0 = True THEN
-		B- := TRUE;
-	END_IF;
+	B- := TRUE;
 	IF B- = True THEN
 		b1 := FALSE;
 		b0 := TRUE;
 	END_IF;
 	IF b0 = True THEN
+		C- := TRUE;
+	END_IF;
+	IF C- = True THEN
+		c1 := FALSE;
+		c0 := TRUE;
+	END_IF;
+	IF c0 = True THEN
 		A- := TRUE;
 	END_IF;
 	IF A- = True THEN
 		a1 := FALSE;
 		a0 := TRUE;
 	END_IF;
+	IF a0 = True THEN
+		D+ := TRUE;
+	END_IF;
+	IF D+ = True THEN
+		d0 := FALSE;
+		d1 := TRUE;
+	END_IF;
 END_IF;
 
-IF a0 = True THEN
+IF d1 = True THEN
 	K0 := FALSE;
 END_IF;
 
 IF K0 = False THEN
-	C- := FALSE;
 	B- := FALSE;
+	C- := FALSE;
 	A- := FALSE;
+	D+ := FALSE;
+END_IF;
+IF d1 = True AND K0 = False THEN
+	D- := TRUE;
+	IF D- = True THEN
+		d1 := FALSE;
+		d0 := TRUE;
+	END_IF;
 END_IF;
 END_WHILE

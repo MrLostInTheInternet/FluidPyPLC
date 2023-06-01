@@ -70,10 +70,10 @@ def lswitch_boolean(limit_switches):
 # stored data
 class Data():
     def __init__(self, s):
-        self.run(s)
-
-    def run(self, s):
         self.sequence = s
+        self.run()
+
+    def run(self):
         g = Groups(self.sequence)
         sw = Switches(self.sequence, g.groups_2D)
         self.groups = g.groups_2D
@@ -84,3 +84,4 @@ class Data():
         self.number_of_pistons = pistons(self.sequence)[0]
         self.pistons_labels = pistons(self.sequence)[1]
         self.lswitch_bool = lswitch_boolean(sw.limit_switches)
+

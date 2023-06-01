@@ -52,8 +52,6 @@ class Plc():
         for i in range(number_of_memories):
             relay_memory_label.append('K' + str(i))
         
-        print(relay_memory_switches)
-        print(relay_memory_label)
         # open the plc.txt file and write the code, in ST language, on it
         dir = "./plc/plc.txt"
         with open(dir,'w') as f:
