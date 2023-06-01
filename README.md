@@ -33,7 +33,7 @@ sudo apt-get install python3 python3-pip
 ```
 Then you need to install the modules using pip install:
 ```bash
-pip install PySimpleGUI matplotlib tk numpy
+pip install PySimpleGUI matplotlib tk pillow
 ```
 Now you are ready to install FluidPy 2.0
 
