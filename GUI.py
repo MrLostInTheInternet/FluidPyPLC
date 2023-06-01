@@ -2,6 +2,7 @@ from get_sequence import *
 
 import PySimpleGUI as sg
 
+
 def collapse(layout, key, visible):
     return sg.pin(sg.Column(layout, key=key, visible=visible))
 
