@@ -71,6 +71,7 @@ class Gui():
         window = sg.Window('GUI', layout, finalize = True)
         window['input'].bind("<Return>", "_Enter")
 
+        sequence = ''
         Text = ''
         toggle_bool1 = False
         toggle_bool2 = False
@@ -95,7 +96,8 @@ class Gui():
                     sg.PopupQuickMessage(' The Stroke must be LETTER followed by + or - ', background_color='Red')
                 if check_stroke and check_sequence:
                     sequence_append(stroke, self.s)
-                    window['text'].update(self.s)
+                    sequence += stroke.upper() + '/'
+                    window['text'].update(sequence)
                     window['input'].update('')
                 else:
                     sg.PopupQuickMessage('The Piston is already in that position!', background_color='Red')
