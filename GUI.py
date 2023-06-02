@@ -50,10 +50,10 @@ class Gui():
 
         image_viewer_column = [
             [sg.Table(values = (self.data) , headings = headings, size = (1, 8), visible = False, key = 'table', display_row_numbers=False, auto_size_columns=True, justification='center')],
-            [sg.Image(key="-IMAGE-", visible = False, expand_x = True, expand_y=True, size=(300, 400))]
+            [sg.Image(key="-IMAGE-", visible = False, expand_x = True)]
         ]
 
-        layout_data = [[sg.Text('Sequence:', size = (11, 2)), sg.Text(key = 'text', expand_x = True, text_color = 'White')],
+        layout_data = [[sg.Text('Sequence:', size = (11, 2)), sg.Text(key = 'text', expand_x = True, size = (35, 2), text_color = 'White')],
                     [sg.Text('Insert stroke: ', size = (13, 1)), sg.Input(key = 'input', size = (3, 1), text_color='Black', background_color='White', pad=(10,1)), sg.Text('E.g. A+, b-, etc..',expand_x = True, text_color = 'White', justification='right')],
                     [sg.Button('Finish', size =(10, 1), button_color='Green', mouseover_colors=('Black', 'White'), pad=(3, 20)), sg.Button('Clear', size = (10, 1)), sg.Button("Display Diagram's fases", expand_x = True, mouseover_colors=('Black', 'White'), expand_y = False, button_color = ('Black','Gray'))],
                     [sg.Checkbox('Show PLC ST code', enable_events=True, key = 'show_plc'), sg.Checkbox('Show Data', enable_events=True, key = 'data')],
