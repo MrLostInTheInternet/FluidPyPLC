@@ -2,38 +2,44 @@ PROGRAM PLC_PRG
 VAR
 	K0 AT %Q* : BOOL;
 	K1 AT %Q* : BOOL;
+	K2 AT %Q* : BOOL;
 	A+ AT %Q* : BOOL;
 	A- AT %Q* : BOOL;
 	B+ AT %Q* : BOOL;
+	C- AT %Q* : BOOL;
 	B- AT %Q* : BOOL;
 	C+ AT %Q* : BOOL;
-	C- AT %Q* : BOOL;
-	c0 AT %I* : BOOL;
+	c1 AT %I* : BOOL;
 	a1 AT %I* : BOOL;
 	a0 AT %I* : BOOL;
 	b1 AT %I* : BOOL;
+	c0 AT %I* : BOOL;
 	b0 AT %I* : BOOL;
-	c1 AT %I* : BOOL;
 	START : BOOL;
 END_VAR
 
 K0 := FALSE;
 K1 := FALSE;
+K2 := FALSE;
 A+ := FALSE;
 A- := FALSE;
 B+ := FALSE;
+C- := FALSE;
+A+ := FALSE;
+A- := FALSE;
 B- := FALSE;
 C+ := FALSE;
-C- := FALSE;
-c0 := TRUE;
+c1 := TRUE;
 a1 := FALSE;
 a0 := TRUE;
 b1 := FALSE;
+c0 := FALSE;
+a1 := FALSE;
+a0 := TRUE;
 b0 := TRUE;
-c1 := FALSE;
 
 WHILE START = True DO
-IF START = True AND c0 = True AND K0 = False AND K1 = False THEN
+IF START = True AND c1 = True AND K0 = False AND K1 = False AND K2 = False THEN
 	A+ := TRUE;
 	IF A+ = True THEN
 		a0 := FALSE;
@@ -47,7 +53,6 @@ END_IF;
 
 IF K0 = True THEN
 	A+ := FALSE;
-	C- := FALSE;
 END_IF;
 
 IF a1 = True AND K0 = True THEN
@@ -63,23 +68,61 @@ IF a1 = True AND K0 = True THEN
 		b0 := FALSE;
 		b1 := TRUE;
 	END_IF;
+	IF b1 = True THEN
+		C- := TRUE;
+	END_IF;
+	IF C- = True THEN
+		c1 := FALSE;
+		c0 := TRUE;
+	END_IF;
 END_IF;
 
-IF b1 = True THEN
+IF c0 = True THEN
 	K0 := FALSE;
 END_IF;
 
 IF K0 = False THEN
 	A- := FALSE;
 	B+ := FALSE;
+	C- := FALSE;
 END_IF;
 
-IF b1 = True THEN
+IF c0 = True THEN
 	K1 := TRUE;
 END_IF;
 
-IF b1 = True AND K1 = True THEN
-	B- := TRUE;
+IF c0 = True AND K1 = True THEN
+	A+ := TRUE;
+	IF A+ = True THEN
+		a0 := FALSE;
+		a1 := TRUE;
+	END_IF;
+END_IF;
+
+IF a1 = True THEN
+	K1 := FALSE;
+END_IF;
+
+IF K1 = False THEN
+	A- := FALSE;
+	B+ := FALSE;
+	C- := FALSE;
+END_IF;
+
+
+IF a1 = True THEN
+	K2 := TRUE;
+END_IF;
+
+IF a1 = True AND K2 = True THEN
+	A- := TRUE;
+	IF A- = True THEN
+		a1 := FALSE;
+		a0 := TRUE;
+	END_IF;
+	IF a0 = True THEN
+		B- := TRUE;
+	END_IF;
 	IF B- = True THEN
 		b1 := FALSE;
 		b0 := TRUE;
@@ -94,19 +137,13 @@ IF b1 = True AND K1 = True THEN
 END_IF;
 
 IF c1 = True THEN
-	K1 := FALSE;
+	K2 := FALSE;
 END_IF;
 
-IF K1 = False THEN
+IF K2 = False THEN
 	A- := FALSE;
 	B+ := FALSE;
+	C- := FALSE;
 END_IF;
 
-IF c1 = True AND K0 = False AND K1 = False THEN
-	C- := TRUE;
-	IF C- = True THEN
-		c1 := FALSE;
-		c0 := TRUE;
-	END_IF;
-END_IF;
 END_WHILE

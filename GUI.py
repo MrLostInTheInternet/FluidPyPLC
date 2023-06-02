@@ -86,18 +86,19 @@ class Gui():
                 stroke = values['input']
                 check_stroke = stroke_handler(stroke)
                 if stroke == '/':
-                    sg.PopupQuickMessage('Click finish to terminate the sequence.', background_color='Blue')
+                    sg.PopupQuickMessage(' Click finish to terminate the sequence. ', background_color='Blue')
                     window['input'].update('')
                 
                 if check_stroke:
                     check_sequence = sequence_handler(stroke, self.s)
-                
+                else:
+                    sg.PopupQuickMessage(' The Stroke must be LETTER followed by + or - ', background_color='Red')
                 if check_stroke and check_sequence:
                     sequence_append(stroke, self.s)
                     window['text'].update(self.s)
                     window['input'].update('')
                 else:
-                    print("Retry")
+                    sg.PopupQuickMessage('The Piston is already in that position!', background_color='Red')
                     window['input'].update('')
             
             if event == 'Finish':
