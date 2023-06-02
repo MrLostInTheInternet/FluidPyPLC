@@ -24,7 +24,7 @@ def sequence_handler(stroke, s):
     if stroke.upper() not in s:
         return True
     else:
-        res = ''.join(s).rindex(stroke.upper()[0])
+        res = ''.join(s).rindex(stroke.upper()[0]) # reverse index of the last occurence of the stroke label
         if res != 0:
             last_index = round(res/2)
             if stroke.upper() == s[last_index]:

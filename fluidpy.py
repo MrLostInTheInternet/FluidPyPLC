@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 from get_sequence import Sequence
 from diagrams import diagrams
 from plc import Plc
+from GUI import Gui
 
 import argparse
 import subprocess
@@ -56,9 +57,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if args.gui:
         # gui mode
-        '''Gui = GUI()
-        Gui.run()'''
-        print('gui')
+        gui = Gui()
+        gui.gui_mode()
     elif args.terminal:
         # terminal mode
         terminal()
