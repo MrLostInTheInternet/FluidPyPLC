@@ -48,7 +48,7 @@ git clone https://github.com/MrLostInTheInternet/FluidPy2.0.git
 ```
 cd FluidPy2.0/
 
-python3 main.py
+python3 fluidpy.py
 ```
 
 To view all the usage's methods use the tags ```--help``` or ```-h```.
