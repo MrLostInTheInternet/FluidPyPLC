@@ -74,12 +74,15 @@ class Plc():
                 if d.lswitch[i] not in seen:
                     f.write(f'\t{d.lswitch[i]} AT %I* : BOOL;\n')
                     seen.append(d.lswitch[i])
+            seen = []
             f.write('\tSTART : BOOL;\n')
             f.write('END_VAR\n\n')
             for i in range(number_of_memories):
                 f.write(f'{relay_memory_label[i]} := FALSE;\n')
             for i in range(l):
-                f.write(f'{solenoids[i]} := FALSE;\n')
+                if solenoids[i] not in seen:
+                    f.write(f'{solenoids[i]} := FALSE;\n')
+                    seen.append(solenoids[i])
 
             # shift by one to the left the list of switches
             limit_switches = rotate(d.lswitch, 1)
@@ -146,6 +149,8 @@ class Plc():
                 while finish_group < len(plc_groups[j + 1]):
                     # while the group isn't finished continue to write the triggered limit switches and solenoids
                     f.write(f'\t{solenoids[stroke_index]} := TRUE;\n\t')
+                    if finish_group > 0:
+                        f.write('END_IF;\n\t')
                     if finish_group != (len(plc_groups[j+1]) - 1):
                         f.write(f'IF {limit_switches[stroke_index]} THEN\n\t')
                     # we move by one index at the time until the group does not finish
@@ -183,6 +188,7 @@ class Plc():
                         f.write(f'AND {relay_memory_label[i]} = False ')
                     f.write('THEN\n')
                     f.write(f'\t{solenoids[stroke_index]} := TRUE;\n')
+                    f.write('END_IF;\n\t')
             f.write('END_WHILE\n')
             f.close()
         self.relay_memory_labels = relay_memory_label

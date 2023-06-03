@@ -1,71 +1,111 @@
 PROGRAM PLC_PRG
 VAR
 	K0 AT %Q* : BOOL;
+	K1 AT %Q* : BOOL;
+	K2 AT %Q* : BOOL;
 	APositive AT %Q* : BOOL;
 	BPositive AT %Q* : BOOL;
-	CPositive AT %Q* : BOOL;
-	ANegative AT %Q* : BOOL;
 	BNegative AT %Q* : BOOL;
+	ANegative AT %Q* : BOOL;
+	CPositive AT %Q* : BOOL;
 	CNegative AT %Q* : BOOL;
-	c0 AT %I* : BOOL;
+	DPositive AT %Q* : BOOL;
+	DNegative AT %Q* : BOOL;
+	a0 AT %I* : BOOL;
 	a1 AT %I* : BOOL;
 	b1 AT %I* : BOOL;
-	c1 AT %I* : BOOL;
-	a0 AT %I* : BOOL;
 	b0 AT %I* : BOOL;
+	c1 AT %I* : BOOL;
+	c0 AT %I* : BOOL;
+	d1 AT %I* : BOOL;
+	d0 AT %I* : BOOL;
 	START : BOOL;
 END_VAR
 
 K0 := FALSE;
+K1 := FALSE;
+K2 := FALSE;
 APositive := FALSE;
 BPositive := FALSE;
-CPositive := FALSE;
-ANegative := FALSE;
 BNegative := FALSE;
+ANegative := FALSE;
+CPositive := FALSE;
 CNegative := FALSE;
-c0 := TRUE;
-a1 := FALSE;
-b1 := FALSE;
-c1 := FALSE;
-a0 := TRUE;
-b0 := TRUE;
+DPositive := FALSE;
+DNegative := FALSE;
 
 WHILE START = True DO
-IF START AND c0 AND NOT K0 THEN
+IF START AND a0 AND NOT K0 AND NOT K1 AND NOT K2 THEN
 	APositive := TRUE;
 	IF a1 = True THEN
 		BPositive := TRUE;
 	END_IF;
-	IF b1 = True THEN
-		CPositive := TRUE;
-	END_IF;
-	IF c1 = True THEN
+	IF b1 THEN
 		K0 := TRUE;
 	END_IF;
 
 END_IF;
 
 
-IF K0 = True THEN
+IF K0 THEN
 	Apositive := FALSE;
 	Bpositive := FALSE;
-	Cpositive := FALSE;
 END_IF;
 
-IF c1 = True AND K0 = True THEN
-	ANegative := TRUE;
-	IF a0 = True THEN
-		BNegative := TRUE;
-	IF b0 = True THEN
-		CNegative := TRUE;
-	IF c0 = True THEN
+IF b1 AND K0 THEN
+	BNegative := TRUE;
+	IF b0 THEN
+		ANegative := TRUE;
+	END_IF;
+	IF a0 THEN
+		CPositive := TRUE;
+	END_IF;
+	IF c1 THEN
+		K1 := TRUE;
 		K0 := FALSE;
 	END_IF;
 END_IF;
-IF K0 = False THEN
-	Anegative := FALSE;
+
+IF NOT K0 THEN
 	Bnegative := FALSE;
-	Cnegative := FALSE;
+	Anegative := FALSE;
+	Cpositive := FALSE;
+END_IF;
+
+IF c1 AND K1 THEN
+	CNegative := TRUE;
+	IF c0 THEN
+		APositive := TRUE;
+	END_IF;
+	IF a1 THEN
+		DPositive := TRUE;
+	END_IF;
+	IF d1 THEN
+		K2 := TRUE;
+		K1 := FALSE;
+	END_IF;
+END_IF;
+
+IF NOT K1 THEN
+	Bnegative := FALSE;
+	Anegative := FALSE;
+	Cpositive := FALSE;
+END_IF;
+
+IF d1 AND K2 THEN
+	DNegative := TRUE;
+	IF d0 THEN
+		ANegative := TRUE;
+	END_IF;
+	IF a0 THEN
+		K2 := FALSE;
+	END_IF;
+END_IF;
+
+IF NOT K2 THEN
+	Bnegative := FALSE;
+	Anegative := FALSE;
+	Cpositive := FALSE;
 END_IF;
 
 END_WHILE

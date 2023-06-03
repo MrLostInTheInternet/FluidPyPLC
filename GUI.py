@@ -36,12 +36,12 @@ def elaborate_data(s):
 
 class Gui():
     def __init__(self):
-        self.s = []
+        self.sequence = []
         self.data = []
     def run(self):
-        self.data = elaborate_data(self.s)
-        diagrams(self.s)
-        Plc(self.s)
+        self.data = elaborate_data(self.sequence)
+        diagrams(self.sequence)
+        Plc(self.sequence)
     
     def gui_mode(self):
         section = [[sg.Multiline(expand_x = True, horizontal_scroll=True, size = (50, 29), key = 'plc_code', background_color='#BA9D79', text_color='Black')]]
@@ -55,7 +55,7 @@ class Gui():
 
         layout_data = [[sg.Text('Sequence:', size = (11, 2)), sg.Text(key = 'text', expand_x = True, size = (35, 2), text_color = 'White')],
                     [sg.Text('Insert stroke: ', size = (13, 1)), sg.Input(key = 'input', size = (3, 1), text_color='Black', background_color='White', pad=(10,1)), sg.Text('E.g. A+, b-, etc..',expand_x = True, text_color = 'White', justification='right')],
-                    [sg.Button('Finish', size =(10, 1), button_color='Green', mouseover_colors=('Black', 'White'), pad=(3, 20)), sg.Button('Clear', size = (10, 1)), sg.Button("Display Diagram's fases", expand_x = True, mouseover_colors=('Black', 'White'), expand_y = False, button_color = ('Black','Gray'))],
+                    [sg.Button('Finish', size =(10, 1), button_color='Green', mouseover_colors=('Black', 'White'), pad=(3, 20)), sg.Button('Clear', size = (10, 1)), sg.Button('Delete', size = (10, 1)), sg.Button("Display Diagram's fases", expand_x = True, mouseover_colors=('Black', 'White'), expand_y = False, button_color = ('Black','Gray'))],
                     [sg.Checkbox('Show PLC ST code', enable_events=True, key = 'show_plc'), sg.Checkbox('Show Data', enable_events=True, key = 'data')],
                     [collapse(section, 'plc', False)],
                 ]
@@ -91,11 +91,11 @@ class Gui():
                     window['input'].update('')
                 
                 if check_stroke:
-                    check_sequence = sequence_handler(stroke, self.s)
+                    check_sequence = sequence_handler(stroke, self.sequence)
                 else:
                     sg.PopupQuickMessage(' The Stroke must be LETTER followed by + or - ', background_color='Red')
                 if check_stroke and check_sequence:
-                    sequence_append(stroke, self.s)
+                    sequence_append(stroke, self.sequence)
                     sequence += stroke.upper() + '/'
                     window['text'].update(sequence)
                     window['input'].update('')
@@ -104,10 +104,10 @@ class Gui():
                     window['input'].update('')
             
             if event == 'Finish':
-                if len(self.s) == 0:
+                if len(self.sequence) == 0:
                     sg.PopupQuickMessage('No sequence submitted.', background_color='Red')
                 else:
-                    check = close_sequence_handler(self.s)
+                    check = close_sequence_handler(self.sequence)
                     if check is False:
                         sg.PopupQuickMessage("The sequence isn't completed.", background_color='Red')
                         continue
@@ -121,12 +121,18 @@ class Gui():
                         window['plc_code'].update(Text)
                                 
             if event == 'Clear':
-                self.s = []
+                self.sequence = []
+                sequence = ''
                 window['text'].update('')
                 toggle_bool2 = False
                 window['-IMAGE-'].update(visible = False)
                 window['plc_code'].update('')
                 window['table'].update('')
+            
+            if event == 'Delete':
+                self.sequence.pop()
+                sequence = sequence[:-3]
+                window['text'].update(sequence)
 
             if event == "Display Diagram's fases" and check:
                 toggle_bool2 = not toggle_bool2
