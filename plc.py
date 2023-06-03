@@ -77,18 +77,12 @@ class Plc():
             seen = []
             f.write('\tSTART : BOOL;\n')
             f.write('END_VAR\n\n')
-            for i in range(number_of_memories):
-                f.write(f'{relay_memory_label[i]} := FALSE;\n')
-            for i in range(l):
-                if solenoids[i] not in seen:
-                    f.write(f'{solenoids[i]} := FALSE;\n')
-                    seen.append(solenoids[i])
 
             # shift by one to the left the list of switches
             limit_switches = rotate(d.lswitch, 1)
             #---------------FIRST GROUP-----------------------
             #------------------START--------------------------
-            f.write('\nWHILE START = True DO\n')
+            f.write('IF START THEN\n')
             # IF statement *
             f.write(f'IF START AND {limit_switches[-1]} AND NOT {relay_memory_label[0]} ')
             for i in range(1, number_of_memories):
@@ -189,7 +183,7 @@ class Plc():
                     f.write('THEN\n')
                     f.write(f'\t{solenoids[stroke_index]} := TRUE;\n')
                     f.write('END_IF;\n')
-            f.write('END_WHILE\n')
+            f.write('END_IF;\n')
             f.close()
         self.relay_memory_labels = relay_memory_label
         self.relay_memory_switches = relay_memory_switches
