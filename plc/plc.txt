@@ -1,89 +1,71 @@
 PROGRAM PLC_PRG
 VAR
 	K0 AT %Q* : BOOL;
-	Apositive AT %Q* : BOOL;
-	Bpositive AT %Q* : BOOL;
-	Cpositive AT %Q* : BOOL;
-	Cnegative AT %Q* : BOOL;
-	Anegative AT %Q* : BOOL;
-	Bnegative AT %Q* : BOOL;
-	Dpositive AT %Q* : BOOL;
-	Dnegative AT %Q* : BOOL;
-	d0 AT %I* : BOOL;
+	APositive AT %Q* : BOOL;
+	BPositive AT %Q* : BOOL;
+	CPositive AT %Q* : BOOL;
+	ANegative AT %Q* : BOOL;
+	BNegative AT %Q* : BOOL;
+	CNegative AT %Q* : BOOL;
+	c0 AT %I* : BOOL;
 	a1 AT %I* : BOOL;
 	b1 AT %I* : BOOL;
 	c1 AT %I* : BOOL;
-	c0 AT %I* : BOOL;
 	a0 AT %I* : BOOL;
 	b0 AT %I* : BOOL;
-	d1 AT %I* : BOOL;
 	START : BOOL;
 END_VAR
 
 K0 := FALSE;
-Apositive := FALSE;
-Bpositive := FALSE;
-Cpositive := FALSE;
-Cnegative := FALSE;
-Anegative := FALSE;
-Bnegative := FALSE;
-Dpositive := FALSE;
-Dnegative := FALSE;
-d0 := TRUE;
+APositive := FALSE;
+BPositive := FALSE;
+CPositive := FALSE;
+ANegative := FALSE;
+BNegative := FALSE;
+CNegative := FALSE;
+c0 := TRUE;
 a1 := FALSE;
 b1 := FALSE;
 c1 := FALSE;
-c0 := TRUE;
 a0 := TRUE;
 b0 := TRUE;
-d1 := FALSE;
 
 WHILE START = True DO
-IF START = True AND d0 = True AND K0 = False THEN
-	Apositive := TRUE;
+IF START AND c0 AND NOT K0 THEN
+	APositive := TRUE;
 	IF a1 = True THEN
-		Bpositive := TRUE;
+		BPositive := TRUE;
 	END_IF;
 	IF b1 = True THEN
-		Cpositive := TRUE;
+		CPositive := TRUE;
 	END_IF;
-	
+	IF c1 = True THEN
+		K0 := TRUE;
+	END_IF;
+
 END_IF;
 
-IF c1 = True THEN
-	K0 := TRUE;
-END_IF;
 
 IF K0 = True THEN
-	A+ := FALSE;
-	B+ := FALSE;
-	C+ := FALSE;
-	D- := FALSE;
+	Apositive := FALSE;
+	Bpositive := FALSE;
+	Cpositive := FALSE;
 END_IF;
 
 IF c1 = True AND K0 = True THEN
-	Cnegative := TRUE;
-	IF c0 = True THEN
-		Anegative := TRUE;
-	END_IF;
+	ANegative := TRUE;
 	IF a0 = True THEN
-		Bnegative := TRUE;
-	END_IF;
+		BNegative := TRUE;
 	IF b0 = True THEN
-		Dpositive := TRUE;
+		CNegative := TRUE;
+	IF c0 = True THEN
+		K0 := FALSE;
 	END_IF;
 END_IF;
-
-IF d1 = True THEN
-	K0 := FALSE;
-END_IF;
-
 IF K0 = False THEN
-	C- := FALSE;
-	A- := FALSE;
-	B- := FALSE;
-	D+ := FALSE;
+	Anegative := FALSE;
+	Bnegative := FALSE;
+	Cnegative := FALSE;
 END_IF;
-IF d1 = True AND K0 = False THEN
-	Dnegative := TRUE;
+
 END_WHILE

@@ -1,5 +1,3 @@
-import numpy as np
-
 # function that founds the number of block in the sequence
 def number_of_blocks(s):
     seen = set()

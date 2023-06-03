@@ -1,4 +1,3 @@
-from set_groups import Groups
 from copy import deepcopy
 
 # array rotation to the right by 1, the last limit switch will activate the sequence, together with the Start button

@@ -10,12 +10,16 @@ class Plc():
         g = len(d.groups)
         l = len(d.sequence)
         # change labels to e.g. Apositive, Bnegative, etc ..
-        for i in range(len(d.sequence)):
-            if d.sequence[i][1] == '+':
-                plc_stroke = str(d.sequence[i][0]) + 'positive'
-            else:
-                plc_stroke = str(d.sequence[i][0]) + 'negative'
-            solenoids.append(plc_stroke)
+        plc_groups = [[] for _ in range(len(d.groups))]
+        solenoids = [stroke.replace('+', 'Positive') for stroke in d.sequence]
+        solenoids = [stroke.replace('-', 'Negative') for stroke in solenoids]
+        for i in range(len(d.groups)):
+            for j in range(len(d.groups[i])):
+                if d.groups[i][j][1] == '+':
+                    plc_stroke = str(d.groups[i][j][0]) + 'positive'
+                else:
+                    plc_stroke = str(d.groups[i][j][0]) + 'negative'
+                plc_groups[i].insert(j, plc_stroke)
         # check the loops and possible groups merge
         loop = d.loop
         merge = d.merge
@@ -85,100 +89,103 @@ class Plc():
             #---------------FIRST GROUP-----------------------
             #------------------START--------------------------
             f.write('\nWHILE START = True DO\n')
-            f.write(f'IF START = True AND {limit_switches[-1]} = True AND {relay_memory_label[0]} = False ')
+            # IF statement *
+            f.write(f'IF START AND {limit_switches[-1]} AND NOT {relay_memory_label[0]} ')
             for i in range(1, number_of_memories):
-                f.write(f'AND {relay_memory_label[i]} = False ')
+                f.write(f'AND NOT {relay_memory_label[i]} ')
             f.write('THEN\n\t')
             f.write(f'{solenoids[0]} := TRUE;\n\t')
             #if group 0 ins't just one stroke then
-            if len(d.groups[0]) > 1:
-                finish_group = 1
-                _index_ = 1
-                while finish_group < len(d.groups[0]):
-                    f.write(f'IF {limit_switches[_index_ - 1]} = True THEN\n\t\t')
-                    f.write(f'{solenoids[_index_]} := TRUE;\n\t')
+            if len(plc_groups[0]) > 1:
+                finish_group = 1 # start from 1, and =+ 1 until the group is finished
+                stroke_index = 1 # index of the stroke in the sequence
+
+                # while loop, until finish_group does not reach the group length, the loop continues
+                while finish_group < len(plc_groups[0]):
+                    # if limit switch is triggered by the first stroke
+                    f.write(f'IF {limit_switches[stroke_index - 1]} = True THEN\n\t\t')
+                    # then the next solenoid is triggered
+                    f.write(f'{solenoids[stroke_index]} := TRUE;\n\t')
                     f.write('END_IF;\n\t')
-                    _index_ += 1
+                    # add 1 to the indexes so the next strokes and limit switches will be triggered
+                    stroke_index += 1
                     finish_group += 1
+                # when the first group is finishes, then the limit switch that activates the first memory is triggered
+                f.write(f'IF {relay_memory_switches[0][0]} = True THEN\n\t\t')
+                f.write(f'{relay_memory_label[0]} := TRUE;\n\t')
+                f.write('END_IF;\n')
+                # then we need to close the IF statement *
                 f.write('\nEND_IF;\n\n')
             else:
-                _index_ = 1
+                # if the first group is composed by just one stroke then we pass to the next group by activating the first memory
+                stroke_index = 1
+                f.write(f'IF {relay_memory_switches[0][0]} = True THEN\n\t\t')
+                f.write(f'{relay_memory_label[0]} := TRUE;\n\t')
+                f.write('END_IF;\n')
+                # we close the IF statement *
                 f.write('END_IF;\n\n')
-            f.write(f'IF {relay_memory_switches[0][0]} = True THEN\n\t')
-            f.write(f'{relay_memory_label[0]} := TRUE;\n')
-            f.write('END_IF;\n')
+            # first group is Done!
 
-            #first relay-------------------------------------
+            # first memory relay activation
             f.write(f'\nIF {relay_memory_label[0]} = True THEN\n')
             if merge:
+                # if the last group can be merged with the first one, then we include those strokes
                 merged_groups = []
-                merged_groups = d.groups[0] + d.groups[-1]
-                for k in range(len(d.groups[0]) + len(d.groups[-1])):
+                merged_groups = plc_groups[0] + plc_groups[-1]
+                for k in range(len(plc_groups[0]) + len(plc_groups[-1])):
                     f.write(f'\t{merged_groups[k]} := FALSE;\n')
                 f.write('END_IF;\n\n')
             else:
-                for k in range(len(d.groups[0])):
-                    f.write(f'\t{d.groups[0][k]} := FALSE;\n')
+                # if not, write only the group strokes
+                for k in range(len(plc_groups[0])):
+                    f.write(f'\t{plc_groups[0][k]} := FALSE;\n')
                 f.write('END_IF;\n\n')
 
             #------------NEXT GROUPS-------------------------
             for j in range(number_of_memories):
                 finish_group = 0
-                if j > 0:
-                    #activation switch
-                    f.write(f'\nIF {relay_memory_switches[j][0]} = True THEN\n\t')
-                    f.write(f'{relay_memory_label[j]} := TRUE;\n')
-                    f.write('END_IF;\n\n')
 
-                f.write(f'IF {limit_switches[_index_ - 1]} = True AND {relay_memory_label[j]} = True THEN\n')
-                while finish_group < len(d.groups[j + 1]):
-                    f.write(f'\t{solenoids[_index_]} := TRUE;\n')
-                    if finish_group != 0:
-                        f.write('\tEND_IF;\n')
-                    if finish_group != (len(d.groups[j+1]) - 1):
-                        f.write(f'\tIF {limit_switches[_index_]} = True THEN\n\t')
-                    _index_ += 1
+                f.write(f'IF {limit_switches[stroke_index - 1]} = True AND {relay_memory_label[j]} = True THEN\n')
+                while finish_group < len(plc_groups[j + 1]):
+                    # while the group isn't finished continue to write the triggered limit switches and solenoids
+                    f.write(f'\t{solenoids[stroke_index]} := TRUE;\n\t')
+                    if finish_group != (len(plc_groups[j+1]) - 1):
+                        f.write(f'IF {limit_switches[stroke_index]} = True THEN\n\t')
+                    # we move by one index at the time until the group does not finish
+                    stroke_index += 1
                     finish_group += 1
+                
+                f.write(f'IF {relay_memory_switches[j][1]} = True THEN\n\t\t')
+                if number_of_memories > 1 and j < number_of_memories - 1:
+                    f.write(f'{relay_memory_label[j + 1]} := TRUE;\n\t\t')
+                f.write(f'{relay_memory_label[j]} := FALSE;\n\t')
                 f.write('END_IF;\n')
-                if j == 0:
-                    f.write(f'\nIF {relay_memory_switches[j][1]} = True THEN\n\t')
-                    f.write(f'{relay_memory_label[j]} := FALSE;\n')
-                    f.write('END_IF;\n')
+                f.write('END_IF;\n\n')
 
-                    f.write(f'\nIF {relay_memory_label[0]} = False THEN\n')
-                    for k in range(len(d.groups[1])):
-                        f.write(f'\t{d.groups[1][k]} := FALSE;\n')
-                    f.write('END_IF;\n')
-                elif j > 0:
-                    #deactivation switch
-                    f.write(f'\nIF {relay_memory_switches[j][1]} = True THEN\n\t')
-                    f.write(f'{relay_memory_label[j]} := FALSE;\n')
-                    f.write('END_IF;\n')
-
-                    f.write(f'\nIF {relay_memory_label[j]} = False THEN\n')
-                    for k in range(len(d.groups[1])):
-                        f.write(f'\t{d.groups[1][k]} := FALSE;\n')
-                    f.write('END_IF;\n\n')
+                f.write(f'IF {relay_memory_label[j]} = False THEN\n')
+                for k in range(len(plc_groups[1])):
+                    f.write(f'\t{plc_groups[1][k]} := FALSE;\n')
+                f.write('END_IF;\n\n')
                 #------------------------------------
             if merge:
-                f.write(f'IF {limit_switches[_index_ - 1]} = True AND {relay_memory_label[0]} = False ')
-                if len(d.groups[-1]) > 1:
+                f.write(f'IF {limit_switches[stroke_index - 1]} = True AND {relay_memory_label[0]} = False ')
+                if len(plc_groups[-1]) > 1:
                     for i in range(1, number_of_memories):
                         f.write(f'AND {relay_memory_label[i]} = False ')
                     f.write('THEN\n')
                     finish_group = 0
-                    while finish_group < len(d.groups[-1]):
-                        f.write(f'\t{solenoids[_index_]} := TRUE;\n')
-                        if finish_group != (len(d.groups[-1]) - 1):
-                            f.write(f'\tIF {limit_switches[_index_]} = True THEN\n\t')
-                        _index_ += 1
+                    while finish_group < len(plc_groups[-1]):
+                        f.write(f'\t{solenoids[stroke_index]} := TRUE;\n')
+                        if finish_group != (len(plc_groups[-1]) - 1):
+                            f.write(f'\tIF {limit_switches[stroke_index]} = True THEN\n\t')
+                        stroke_index += 1
                         finish_group += 1
                     f.write('END_IF;\n')
                 else:
                     for i in range(1, number_of_memories):
                         f.write(f'AND {relay_memory_label[i]} = False ')
                     f.write('THEN\n')
-                    f.write(f'\t{solenoids[_index_]} := TRUE;\n')
+                    f.write(f'\t{solenoids[stroke_index]} := TRUE;\n')
             f.write('END_WHILE\n')
             f.close()
         self.relay_memory_labels = relay_memory_label
