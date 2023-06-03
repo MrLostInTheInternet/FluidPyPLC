@@ -17,7 +17,7 @@ class Window(Frame):
         self.master = master
         self.pack(fill=BOTH, expand=1)
         
-        load = Image.open("./Plots/diagram_fases.png")
+        load = Image.open("./Plots/phases_diagram.png")
         render = ImageTk.PhotoImage(load)
         img = Label(self, image=render)
         img.image = render
