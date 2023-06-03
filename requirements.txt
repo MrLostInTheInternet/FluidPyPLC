@@ -1,0 +1,4 @@
+PySimpleGUI
+matplotlib
+tk
+pillow
