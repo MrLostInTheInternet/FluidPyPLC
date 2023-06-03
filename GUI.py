@@ -113,7 +113,7 @@ class Gui():
                         continue
                     else:
                         self.run()
-                        dir1 = './plc/plc.txt'
+                        dir1 = './plc/plc.st'
                         with open(dir1, 'r') as p:
                             Text = p.readlines()
                             Text = ''.join(line for line in Text)

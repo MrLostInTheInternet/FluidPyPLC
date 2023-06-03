@@ -68,7 +68,7 @@ if __name__ == '__main__':
     elif args.plc:
         try:
             # open plc ST code with notepad
-            subprocess.call(['notepad.exe', './plc/plc.txt'])
+            subprocess.call(['notepad.exe', './plc/plc.st'])
         except:
             print("There is a problem opening the file.")
     else:

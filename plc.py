@@ -55,7 +55,7 @@ class Plc():
             relay_memory_label.append('K' + str(i))
         
         # open the plc.txt file and write the code, in ST language, on it
-        dir = "./plc/plc.txt"
+        dir = "./plc/plc.st"
         with open(dir,'w') as f:
             #relays variables ----------------------------------------------------
             f.write('PROGRAM PLC_PRG\n')
@@ -188,7 +188,7 @@ class Plc():
                         f.write(f'AND {relay_memory_label[i]} = False ')
                     f.write('THEN\n')
                     f.write(f'\t{solenoids[stroke_index]} := TRUE;\n')
-                    f.write('END_IF;\n\t')
+                    f.write('END_IF;\n')
             f.write('END_WHILE\n')
             f.close()
         self.relay_memory_labels = relay_memory_label
