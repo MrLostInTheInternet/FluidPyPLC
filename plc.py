@@ -156,11 +156,11 @@ class Plc():
                     f.write(f'{relay_memory_label[j + 1]} := TRUE;\n\t\t')
                 f.write(f'{relay_memory_label[j]} := FALSE;\n\t')
                 f.write('END_IF;\n')
-                f.write('END_IF;\n\n')
 
-                f.write(f'IF NOT {relay_memory_label[j]} THEN\n')
+                f.write(f'\tIF NOT {relay_memory_label[j]} THEN\n')
                 for k in range(len(plc_groups[1])):
-                    f.write(f'\t{plc_groups[1][k]} := FALSE;\n')
+                    f.write(f'\t\t{plc_groups[1][k]} := FALSE;\n')
+                f.write('\tEND_IF;\n')
                 f.write('END_IF;\n\n')
                 #------------------------------------
             if merge:
