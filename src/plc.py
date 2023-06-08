@@ -176,8 +176,8 @@ class Plc():
                 f.write('END_IF;\n')
 
                 f.write(f'\tIF NOT {relay_memory_label[j]} THEN\n')
-                for k in range(len(plc_groups[1])):
-                    f.write(f'\t\t{plc_groups[1][k]} := FALSE;\n')
+                for k in range(len(plc_groups[j + 1])):
+                    f.write(f'\t\t{plc_groups[j + 1][k]} := FALSE;\n')
                 f.write('\tEND_IF;\n')
                 f.write('END_IF;\n\n')
                 #------------------------------------
