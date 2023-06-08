@@ -61,18 +61,18 @@ class Plc():
             f.write('PROGRAM PLC_PRG\n')
             f.write('VAR\n')
             for i in range(number_of_memories):
-                f.write(f'\t{relay_memory_label[i]} AT %Q* : BOOL;\n')
+                f.write(f'\t{relay_memory_label[i]} : BOOL;\n')
             #solenoids variables -------------------------------------------------
             seen = []
             for i in range(l):
                 if solenoids[i] not in seen:
-                    f.write(f'\t{solenoids[i]} AT %Q* : BOOL;\n')
+                    f.write(f'\t{solenoids[i]} : BOOL;\n')
                     seen.append(solenoids[i])
             #limit switches variables --------------------------------------------
             seen = []
             for i in range(l):
                 if d.lswitch[i] not in seen:
-                    f.write(f'\t{d.lswitch[i]} AT %I* : BOOL;\n')
+                    f.write(f'\t{d.lswitch[i]} : BOOL;\n')
                     seen.append(d.lswitch[i])
             seen = []
             f.write('\tSTART : BOOL;\n')
