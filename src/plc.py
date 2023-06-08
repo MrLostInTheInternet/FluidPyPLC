@@ -88,7 +88,12 @@ class Plc():
             for i in range(1, number_of_memories):
                 f.write(f'AND NOT {relay_memory_label[i]} ')
             f.write('THEN\n\t')
-            f.write(f'{solenoids[0]} := TRUE;\n\t')
+            f.write(f'{solenoids[0]} := TRUE;\n')
+            f.write('END_IF;\n\n')
+            f.write(f'IF START AND NOT {relay_memory_label[0]} ')
+            for i in range(1, number_of_memories):
+                f.write(f'AND NOT {relay_memory_label[i]} ')
+            f.write('THEN\n\t')
             #if group 0 ins't just one stroke then
             if len(plc_groups[0]) > 1:
                 finish_group = 1 # start from 1, and =+ 1 until the group is finished

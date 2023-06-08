@@ -1,74 +1,66 @@
 PROGRAM PLC_PRG
 VAR
-	K0 AT %Q* : BOOL;
-	K1 AT %Q* : BOOL;
-	APositive AT %Q* : BOOL;
-	ANegative AT %Q* : BOOL;
-	BPositive AT %Q* : BOOL;
-	BNegative AT %Q* : BOOL;
-	CPositive AT %Q* : BOOL;
-	CNegative AT %Q* : BOOL;
-	c0 AT %I* : BOOL;
-	a1 AT %I* : BOOL;
-	a0 AT %I* : BOOL;
-	b1 AT %I* : BOOL;
-	b0 AT %I* : BOOL;
-	c1 AT %I* : BOOL;
+	K0 : BOOL;
+	APositive : BOOL;
+	BPositive : BOOL;
+	CPositive : BOOL;
+	CNegative : BOOL;
+	ANegative : BOOL;
+	BNegative : BOOL;
+	b0 : BOOL;
+	a1 : BOOL;
+	b1 : BOOL;
+	c1 : BOOL;
+	c0 : BOOL;
+	a0 : BOOL;
 	START : BOOL;
 END_VAR
 
 IF START THEN
-IF START AND c0 AND NOT K0 AND NOT K1 THEN
+IF START AND b0 AND NOT K0 THEN
 	APositive := TRUE;
-	IF a1 THEN
+END_IF;
+
+IF START AND NOT K0 THEN
+	IF a1 = True THEN
+		BPositive := TRUE;
+	END_IF;
+	IF b1 = True THEN
+		CPositive := TRUE;
+	END_IF;
+	IF c1 THEN
 		K0 := TRUE;
 	END_IF;
+
 END_IF;
 
 
 IF K0 THEN
 	Apositive := FALSE;
-	Cnegative := FALSE;
+	Bpositive := FALSE;
+	Cpositive := FALSE;
 END_IF;
 
-IF a1 AND K0 THEN
-	ANegative := TRUE;
-END_IF;
-
-IF b1 AND K1 THEN
-	BNegative := TRUE;
+IF c1 AND K0 THEN
+	CNegative := TRUE;
 END_IF;
 
 
 IF K0 THEN
+	IF c0 THEN
+		ANegative := TRUE;
 	IF a0 THEN
-		BPositive := TRUE;
+		BNegative := TRUE;
 	END_IF;
-	IF b1 THEN
-		K1 := TRUE;
+	END_IF;
+	IF b0 THEN
 		K0 := FALSE;
 	END_IF;
 	IF NOT K0 THEN
+		Cnegative := FALSE;
 		Anegative := FALSE;
-		Bpositive := FALSE;
+		Bnegative := FALSE;
 	END_IF;
 END_IF;
 
-
-IF K1 THEN
-	IF b0 THEN
-		CPositive := TRUE;
-	END_IF;
-	IF c1 THEN
-		K1 := FALSE;
-	END_IF;
-	IF NOT K1 THEN
-		Anegative := FALSE;
-		Bpositive := FALSE;
-	END_IF;
-END_IF;
-
-IF c1 AND NOT K0 AND NOT K1 THEN
-	CNegative := TRUE;
-END_IF;
 END_IF;
