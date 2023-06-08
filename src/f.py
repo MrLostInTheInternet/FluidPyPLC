@@ -17,7 +17,7 @@ class Window(Frame):
         self.master = master
         self.pack(fill=BOTH, expand=1)
         
-        load = Image.open("./Plots/phases_diagram.png")
+        load = Image.open("../Plots/phases_diagram.png")
         render = ImageTk.PhotoImage(load)
         img = Label(self, image=render)
         img.image = render
@@ -68,7 +68,7 @@ if __name__ == '__main__':
     elif args.plc:
         try:
             # open plc ST code with notepad
-            subprocess.call(['notepad.exe', './plc/plc.st'])
+            subprocess.call(['notepad.exe', '../plc/plc.st'])
         except:
             print("There is a problem opening the file.")
     else:

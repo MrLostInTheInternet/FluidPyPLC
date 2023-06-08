@@ -55,7 +55,7 @@ class Plc():
             relay_memory_label.append('K' + str(i))
         
         # open the plc.txt file and write the code, in ST language, on it
-        dir = "./plc/plc.st"
+        dir = "../plc/plc.st"
         with open(dir,'w') as f:
             #relays variables ----------------------------------------------------
             f.write('PROGRAM PLC_PRG\n')

@@ -77,7 +77,7 @@ def diagrams(s):
         diagram.axis('off')
         diagram.axis('off')
         plt.subplots_adjust(left=0.190, bottom=0.210, right=0.900, top=0.970, wspace=None, hspace=1.000)
-        plt.savefig('Plots/phases_diagram.png')
+        plt.savefig('../Plots/phases_diagram.png')
 
     except:
         if number_of_pistons == 1:

@@ -113,7 +113,7 @@ class Gui():
                         continue
                     else:
                         self.run()
-                        dir1 = './plc/plc.st'
+                        dir1 = '../plc/plc.st'
                         with open(dir1, 'r') as p:
                             Text = p.readlines()
                             Text = ''.join(line for line in Text)
@@ -136,7 +136,7 @@ class Gui():
 
             if event == "Display Phases' Diagram" and check:
                 toggle_bool2 = not toggle_bool2
-                im = './Plots/phases_diagram.png'
+                im = '../Plots/phases_diagram.png'
                 window['-IMAGE-'].update(im, visible = toggle_bool2)
                 window['image_column'].update(visible = toggle_bool2 or toggle_bool3)
 
