@@ -190,10 +190,13 @@ class Plc():
                     finish_group = 0
                     while finish_group < len(plc_groups[-1]):
                         f.write(f'\t{solenoids[stroke_index]} := TRUE;\n')
+                        if finish_group > 0:
+                            f.write('\tEND_IF;\n')
                         if finish_group != (len(plc_groups[-1]) - 1):
                             f.write(f'\tIF {limit_switches[stroke_index]} THEN\n\t')
                         stroke_index += 1
                         finish_group += 1
+                            
                     f.write('END_IF;\n')
                 else:
                     for i in range(1, number_of_memories):
