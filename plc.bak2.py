@@ -136,32 +136,19 @@ class Plc():
                 f.write('END_IF;\n\n')
 
             #------------NEXT GROUPS-------------------------
-            stroke_index_return = stroke_index
             for j in range(number_of_memories):
                 finish_group = 0
 
                 f.write(f'IF {limit_switches[stroke_index - 1]} AND {relay_memory_label[j]} THEN\n')
-                f.write(f'\t{solenoids[stroke_index]} := TRUE;\n')
-                while finish_group < len(plc_groups[j + 1]):
-                    stroke_index += 1
-                    finish_group += 1
-                f.write('END_IF;\n\n')
-            
-            stroke_index = stroke_index_return
-            for j in range(number_of_memories):
-                finish_group = 0
-                f.write(f'\nIF {relay_memory_label[j]} THEN\n\t')
                 while finish_group < len(plc_groups[j + 1]):
                     # while the group isn't finished continue to write the triggered limit switches and solenoids
-                    if finish_group != (len(plc_groups[j+1]) - 1):
-                        f.write(f'IF {limit_switches[stroke_index]} THEN\n\t')
-                        stroke_index += 1
-                        f.write(f'\t{solenoids[stroke_index]} := TRUE;\n\t')
-                    else:
-                        stroke_index += 1
+                    f.write(f'\t{solenoids[stroke_index]} := TRUE;\n\t')
                     if finish_group > 0:
                         f.write('END_IF;\n\t')
+                    if finish_group != (len(plc_groups[j+1]) - 1):
+                        f.write(f'IF {limit_switches[stroke_index]} THEN\n\t')
                     # we move by one index at the time until the group does not finish
+                    stroke_index += 1
                     finish_group += 1
                 
                 f.write(f'IF {relay_memory_switches[j][1]} THEN\n\t\t')
@@ -192,7 +179,7 @@ class Plc():
                     f.write('END_IF;\n')
                 else:
                     for i in range(1, number_of_memories):
-                        f.write(f'AND NOT {relay_memory_label[i]} ')
+                        f.write(f'AND {relay_memory_label[i]} = False ')
                     f.write('THEN\n')
                     f.write(f'\t{solenoids[stroke_index]} := TRUE;\n')
                     f.write('END_IF;\n')
