@@ -91,5 +91,10 @@ GPLv3
 <p align="center">
 <br>
 <a href="https://github.com/MrLostInTheInternet" target='_blank'>
-<img height='32' style='border:0px;height:32px;border-radius:.5rem' src='https://img.shields.io/badge/GitHub-100000?style&#x3D;for-the-badge&amp;logo&#x3D;github&amp;logoColor&#x3D;white' border='0' alt='Buy Me a Coffee' />
+<img height='32' style='border:0px;height:32px;border-radius:.5rem' src='https://img.shields.io/badge/GitHub-100000?style&#x3D;for-the-badge&amp;logo&#x3D;github&amp;logoColor&#x3D;white' border='0'
+</a>
+
+<a href="https://youtu.be/aMCsqmX1pOI" target='_blank'>
+<img height='32' style='border:0px;height:32px;border-radius:.5rem' src='https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white'
+border='0'
 </a>
