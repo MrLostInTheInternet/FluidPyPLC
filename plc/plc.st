@@ -1,66 +1,107 @@
 PROGRAM PLC_PRG
 VAR
 	K0 : BOOL;
-	APositive : BOOL;
-	BPositive : BOOL;
-	CPositive : BOOL;
-	CNegative : BOOL;
-	ANegative : BOOL;
-	BNegative : BOOL;
-	b0 : BOOL;
-	a1 : BOOL;
-	b1 : BOOL;
-	c1 : BOOL;
-	c0 : BOOL;
-	a0 : BOOL;
-	START : BOOL;
+	K1 : BOOL;
+	K2 : BOOL;
+	K3 : BOOL;
+	AB0 : BYTE;
+	EB0 : BYTE;
 END_VAR
 
-IF START THEN
-IF START AND b0 AND NOT K0 THEN
-	APositive := TRUE;
+//Inputs and Outputs connections
+//AB* are FLUIDSIM PLC IN, EB* are FLUIDSIM PLC OUT
+//A+ -> AB0.1		a1 -> EB0.1
+//A- -> AB0.2		a0 -> EB0.2
+//B+ -> AB0.3		b1 -> EB0.3
+//B- -> AB0.4		b0 -> EB0.4
+//C+ -> AB0.5		c1 -> EB0.5
+//C- -> AB0.6		c0 -> EB0.6
+
+IF EB0.0 THEN
+IF EB0.0 AND EB0.6 AND NOT K0 AND NOT K1 AND NOT K2 AND NOT K3 THEN
+	AB0.1 := TRUE;
 END_IF;
 
-IF START AND NOT K0 THEN
-	IF a1 = True THEN
-		BPositive := TRUE;
-	END_IF;
-	IF b1 = True THEN
-		CPositive := TRUE;
-	END_IF;
-	IF c1 THEN
+IF EB0.0 AND NOT K0 AND NOT K1 AND NOT K2 AND NOT K3 THEN
+	IF EB0.1 THEN
 		K0 := TRUE;
 	END_IF;
-
 END_IF;
 
 
 IF K0 THEN
-	Apositive := FALSE;
-	Bpositive := FALSE;
-	Cpositive := FALSE;
+	AB0.1 := FALSE;
+	AB0.6 := FALSE;
 END_IF;
 
-IF c1 AND K0 THEN
-	CNegative := TRUE;
+IF EB0.1 AND K0 THEN
+	AB0.2 := TRUE;
+END_IF;
+
+IF EB0.3 AND K1 THEN
+	AB0.4 := TRUE;
+END_IF;
+
+IF EB0.4 AND K2 THEN
+	AB0.3 := TRUE;
+END_IF;
+
+IF EB0.3 AND K3 THEN
+	AB0.4 := TRUE;
 END_IF;
 
 
 IF K0 THEN
-	IF c0 THEN
-		ANegative := TRUE;
-	IF a0 THEN
-		BNegative := TRUE;
+	IF EB0.2 THEN
+		AB0.3 := TRUE;
 	END_IF;
-	END_IF;
-	IF b0 THEN
+	IF EB0.3 THEN
+		K1 := TRUE;
 		K0 := FALSE;
 	END_IF;
 	IF NOT K0 THEN
-		Cnegative := FALSE;
-		Anegative := FALSE;
-		Bnegative := FALSE;
+		AB0.2 := FALSE;
+		AB0.3 := FALSE;
 	END_IF;
 END_IF;
 
+
+IF K1 THEN
+	IF EB0.4 THEN
+		K2 := TRUE;
+		K1 := FALSE;
+	END_IF;
+	IF NOT K1 THEN
+		AB0.4 := FALSE;
+	END_IF;
+END_IF;
+
+
+IF K2 THEN
+	IF EB0.3 THEN
+		K3 := TRUE;
+		K2 := FALSE;
+	END_IF;
+	IF NOT K2 THEN
+		AB0.3 := FALSE;
+	END_IF;
+END_IF;
+
+
+IF K3 THEN
+	IF EB0.4 THEN
+		AB0.5 := TRUE;
+	END_IF;
+	IF EB0.5 THEN
+		K3 := FALSE;
+	END_IF;
+	IF NOT K3 THEN
+		AB0.4 := FALSE;
+		AB0.5 := FALSE;
+	END_IF;
+END_IF;
+
+IF EB0.5 AND NOT K0 AND NOT K1 AND NOT K2 AND NOT K3 THEN
+	AB0.6 := TRUE;
+END_IF;
 END_IF;

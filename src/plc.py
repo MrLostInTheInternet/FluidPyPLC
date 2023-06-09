@@ -1,3 +1,4 @@
+import math
 from data import Data
 from set_switches import rotate
 
@@ -10,10 +11,10 @@ class Plc():
         g = len(d.groups)
         l = len(d.sequence)
         # change labels to e.g. Apositive, Bnegative, etc ..
-        plc_groups = [[] for _ in range(len(d.groups))]
-        solenoids = [stroke.replace('+', 'Positive') for stroke in d.sequence]
-        solenoids = [stroke.replace('-', 'Negative') for stroke in solenoids]
-        for i in range(len(d.groups)):
+        plc_groups = [[] for _ in range(g)]
+        solenoids = [stroke.replace('+', 'positive') for stroke in d.sequence]
+        solenoids = [stroke.replace('-', 'negative') for stroke in solenoids]
+        for i in range(g):
             for j in range(len(d.groups[i])):
                 if d.groups[i][j][1] == '+':
                     plc_stroke = str(d.groups[i][j][0]) + 'positive'
@@ -53,7 +54,65 @@ class Plc():
         relay_memory_label = []
         for i in range(number_of_memories):
             relay_memory_label.append('K' + str(i))
+
+        # shift by one to the left the list of switches
+        limit_switches = rotate(d.lswitch, 1)
+        '''
+        Create correct labels for the correct activation of CODESYS' code for FluidSim through OPC DA Server
+        The labels will be AB0, AB1, etc.. for FLUIDSIM PLC IN, and they will be associated with the Solenoids,
+        EB0, EB1, etc.. for FLUIDSIM PLC OUT, and they will be associated with the START and the limit switches
+        '''
+        plc_range_8bit = 0
+        plc_index_8bit = 1
+        plc_seen_IO = []
+        for i in range(l):
+            if solenoids[i] not in plc_seen_IO and plc_index_8bit < 8:
+                plc_seen_IO.append(solenoids[i])
+                for j in range(len(d.groups)):
+                    for z in range(len(plc_groups[j])):
+                        if solenoids[i] == plc_groups[j][z]:
+                            plc_groups[j][z] = "AB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
+                solenoids[i] = "AB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
+                plc_index_8bit += 1
+            elif solenoids[i] in plc_seen_IO:
+                solenoids[i] = solenoids[plc_seen_IO.index(solenoids[i])]
+            elif plc_index_8bit >= 8:
+                plc_index_8bit = 1
+                plc_range_8bit += 1
+                for j in range(g):
+                    for z in range(len(plc_groups[j])):
+                        if solenoids[i] in plc_groups[j][z]:
+                            plc_groups[j][z] = "AB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
+                solenoids[i] = "AB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
+                plc_index_8bit += 1
         
+        plc_range_8bit = 0
+        plc_index_8bit = 1
+        plc_seen_IO = []
+        for i in range(l):
+            if limit_switches[i] not in plc_seen_IO and plc_index_8bit < 8:
+                plc_seen_IO.append(limit_switches[i])
+                for j in range(len(relay_memory_switches)):
+                    for z in range(len(relay_memory_switches[j])):
+                        if limit_switches[i] == relay_memory_switches[j][z]:
+                            relay_memory_switches[j][z] = "EB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
+                limit_switches[i] = "EB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
+                plc_index_8bit += 1
+            elif limit_switches[i] in plc_seen_IO:
+                limit_switches[i] = limit_switches[plc_seen_IO.index(limit_switches[i])]
+            elif plc_index_8bit >= 8:
+                plc_index_8bit = 1
+                plc_range_8bit += 1
+                for j in range(len(relay_memory_switches)):
+                    for z in range(len(relay_memory_switches[j])):
+                        if limit_switches[i] == relay_memory_switches[j][z]:
+                            relay_memory_switches[j][z] = "EB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
+                limit_switches[i] = "EB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
+                plc_index_8bit += 1
+        plc_seen_IO = []
+        n_of_plcs_8bit = 1 + math.floor(len(set(d.sequence)) / 7)
+        d.lswitch = rotate(d.lswitch, 1)
+        print(plc_groups)
         # open the plc.txt file and write the code, in ST language, on it
         dir = "../plc/plc.st"
         with open(dir,'w') as f:
@@ -62,35 +121,29 @@ class Plc():
             f.write('VAR\n')
             for i in range(number_of_memories):
                 f.write(f'\t{relay_memory_label[i]} : BOOL;\n')
-            #solenoids variables -------------------------------------------------
-            seen = []
-            for i in range(l):
-                if solenoids[i] not in seen:
-                    f.write(f'\t{solenoids[i]} : BOOL;\n')
-                    seen.append(solenoids[i])
-            #limit switches variables --------------------------------------------
-            seen = []
-            for i in range(l):
-                if d.lswitch[i] not in seen:
-                    f.write(f'\t{d.lswitch[i]} : BOOL;\n')
-                    seen.append(d.lswitch[i])
-            seen = []
-            f.write('\tSTART : BOOL;\n')
+            for i in range(n_of_plcs_8bit):
+                f.write('\tAB' + str(i) + " : BYTE;\n")
+                f.write('\tEB' + str(i) + " : BYTE;\n")
             f.write('END_VAR\n\n')
 
-            # shift by one to the left the list of switches
-            limit_switches = rotate(d.lswitch, 1)
+            f.write('//Inputs and Outputs connections\n//AB* are FLUIDSIM PLC IN, EB* are FLUIDSIM PLC OUT\n')
+            for i in range(l):
+                if d.sequence[i] not in plc_seen_IO:
+                    f.write(f'//{d.sequence[i]} -> {solenoids[i]}\t\t')
+                    f.write(f'{d.lswitch[i]} -> {limit_switches[i]}\n')
+                    plc_seen_IO.append(d.sequence[i])
+
             #---------------FIRST GROUP-----------------------
             #------------------START--------------------------
-            f.write('IF START THEN\n')
+            f.write('\nIF EB0.0 THEN\n')
             # IF statement *
-            f.write(f'IF START AND {limit_switches[-1]} AND NOT {relay_memory_label[0]} ')
+            f.write(f'IF EB0.0 AND {limit_switches[-1]} AND NOT {relay_memory_label[0]} ')
             for i in range(1, number_of_memories):
                 f.write(f'AND NOT {relay_memory_label[i]} ')
             f.write('THEN\n\t')
             f.write(f'{solenoids[0]} := TRUE;\n')
             f.write('END_IF;\n\n')
-            f.write(f'IF START AND NOT {relay_memory_label[0]} ')
+            f.write(f'IF EB0.0 AND NOT {relay_memory_label[0]} ')
             for i in range(1, number_of_memories):
                 f.write(f'AND NOT {relay_memory_label[i]} ')
             f.write('THEN\n\t')
