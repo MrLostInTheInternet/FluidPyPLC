@@ -64,19 +64,22 @@ class Plc():
         '''
         plc_range_8bit = 0
         plc_index_8bit = 1
+        plc_seen_IO_description = []
         plc_seen_IO = []
         for i in range(l):
-            if solenoids[i] not in plc_seen_IO and plc_index_8bit < 8:
-                plc_seen_IO.append(solenoids[i])
+            if solenoids[i] not in plc_seen_IO_description and plc_index_8bit < 8:
+                plc_seen_IO_description.append(solenoids[i])
                 for j in range(len(d.groups)):
                     for z in range(len(plc_groups[j])):
                         if solenoids[i] == plc_groups[j][z]:
                             plc_groups[j][z] = "AB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
                 solenoids[i] = "AB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
+                plc_seen_IO.append(solenoids[i])
                 plc_index_8bit += 1
-            elif solenoids[i] in plc_seen_IO:
-                solenoids[i] = solenoids[plc_seen_IO.index(solenoids[i])]
-            elif plc_index_8bit >= 8:
+            elif solenoids[i] in plc_seen_IO_description:
+                solenoids[i] = plc_seen_IO[plc_seen_IO_description.index(solenoids[i])]
+            elif plc_index_8bit >= 8 and solenoids[i] not in plc_seen_IO_description:
+                plc_seen_IO_description.append(solenoids[i])
                 plc_index_8bit = 1
                 plc_range_8bit += 1
                 for j in range(g):
@@ -84,23 +87,27 @@ class Plc():
                         if solenoids[i] in plc_groups[j][z]:
                             plc_groups[j][z] = "AB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
                 solenoids[i] = "AB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
+                plc_seen_IO.append(solenoids[i])
                 plc_index_8bit += 1
         
         plc_range_8bit = 0
         plc_index_8bit = 1
+        plc_seen_IO_description = []
         plc_seen_IO = []
         for i in range(l):
-            if limit_switches[i] not in plc_seen_IO and plc_index_8bit < 8:
-                plc_seen_IO.append(limit_switches[i])
+            if limit_switches[i] not in plc_seen_IO_description and plc_index_8bit < 8:
+                plc_seen_IO_description.append(limit_switches[i])
                 for j in range(len(relay_memory_switches)):
                     for z in range(len(relay_memory_switches[j])):
                         if limit_switches[i] == relay_memory_switches[j][z]:
                             relay_memory_switches[j][z] = "EB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
                 limit_switches[i] = "EB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
+                plc_seen_IO.append(limit_switches[i])
                 plc_index_8bit += 1
-            elif limit_switches[i] in plc_seen_IO:
-                limit_switches[i] = limit_switches[plc_seen_IO.index(limit_switches[i])]
-            elif plc_index_8bit >= 8:
+            elif limit_switches[i] in plc_seen_IO_description:
+                limit_switches[i] = plc_seen_IO[plc_seen_IO_description.index(limit_switches[i])]
+            elif plc_index_8bit >= 8 and limit_switches[i] not in plc_seen_IO_description:
+                plc_seen_IO_description.append(limit_switches[i])
                 plc_index_8bit = 1
                 plc_range_8bit += 1
                 for j in range(len(relay_memory_switches)):
@@ -108,11 +115,14 @@ class Plc():
                         if limit_switches[i] == relay_memory_switches[j][z]:
                             relay_memory_switches[j][z] = "EB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
                 limit_switches[i] = "EB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
+                plc_seen_IO.append(limit_switches[i])
                 plc_index_8bit += 1
+        plc_seen_IO_description = []
         plc_seen_IO = []
         n_of_plcs_8bit = 1 + math.floor(len(set(d.sequence)) / 7)
         d.lswitch = rotate(d.lswitch, 1)
         print(plc_groups)
+        print(solenoids)
         # open the plc.txt file and write the code, in ST language, on it
         dir = "../plc/plc.st"
         with open(dir,'w') as f:
@@ -155,7 +165,7 @@ class Plc():
                 # while loop, until finish_group does not reach the group length, the loop continues
                 while finish_group < len(plc_groups[0]):
                     # if limit switch is triggered by the first stroke
-                    f.write(f'IF {limit_switches[stroke_index - 1]} = True THEN\n\t\t')
+                    f.write(f'IF {limit_switches[stroke_index - 1]} = TRUE THEN\n\t\t')
                     # then the next solenoid is triggered
                     f.write(f'{solenoids[stroke_index]} := TRUE;\n\t')
                     f.write('END_IF;\n\t')
