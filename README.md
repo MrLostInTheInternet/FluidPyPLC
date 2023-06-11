@@ -60,6 +60,11 @@ python3 f.py
 To view all the usage's methods use the tags ```--help``` or ```-h```.
  
 ## ⚙️ CODESYS configuration <a name="codesys_configuration"></a>
+[+] To test your PLC's sequence code you can use the plc.py and one of the CONFIGURATION pdfs in the fluidsim folder.
+
+
+[+] If you want to test the code with the CODESYS Visualization, use the plc.bak2.py as plc.py, and the tutorial below. 
+
 In CODESYS you have to create a project. In the project you will have your PLC device, your main application with your main PRG file. To test the ST code you must add a Modbus Serial Device to handle the inputs and outputs of your plc. The Modbus will act as an intermediate between your code and a virtual plc device, like you are setting up the inputs and outputs on a plc in real life.
 
 To do that, open your CODESYS project, go to
