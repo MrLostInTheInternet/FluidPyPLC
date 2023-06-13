@@ -1,7 +1,7 @@
-from get_sequence import *
-from data import Data
-from plc import Plc
-from diagrams import diagrams
+from .get_sequence import *
+from .data import Data
+from .plc import Plc
+from .diagrams import diagrams
 
 import PySimpleGUI as sg
 
@@ -38,10 +38,6 @@ class Gui():
     def __init__(self):
         self.sequence = []
         self.data = []
-    def run(self):
-        self.data = elaborate_data(self.sequence)
-        diagrams(self.sequence)
-        Plc(self.sequence)
     
     def gui_mode(self):
         section = [[sg.Multiline(expand_x = True, horizontal_scroll=True, size = (50, 29), key = 'plc_code', background_color='#BA9D79', text_color='Black')]]
@@ -82,7 +78,8 @@ class Gui():
             event, values = window.read()
             if event is None:
                 break
-
+            if event in (sg.WINDOW_CLOSED, 'Exit'):
+                break
             if event == 'input' + '_Enter':
                 stroke = values['input']
                 check_stroke = stroke_handler(stroke)
@@ -112,8 +109,10 @@ class Gui():
                         sg.PopupQuickMessage("The sequence isn't completed.", background_color='Red')
                         continue
                     else:
-                        self.run()
-                        dir1 = '../plc/plc.st'
+                        self.data = elaborate_data(self.sequence)
+                        diagrams(self.sequence)
+                        Plc(self.sequence)
+                        dir1 = './plc/plc.st'
                         with open(dir1, 'r') as p:
                             Text = p.readlines()
                             Text = ''.join(line for line in Text)
@@ -136,7 +135,7 @@ class Gui():
 
             if event == "Display Phases' Diagram" and check:
                 toggle_bool2 = not toggle_bool2
-                im = '../Plots/phases_diagram.png'
+                im = './Plots/phases_diagram.png'
                 window['-IMAGE-'].update(im, visible = toggle_bool2)
                 window['image_column'].update(visible = toggle_bool2 or toggle_bool3)
 

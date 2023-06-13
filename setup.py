@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-VERSION = '0.0.3'
+VERSION = '0.1.2'
 DESCRIPTION = 'FluidSim Circuits Analyzer & PLC ST Code Generator'
 LONG_DESCRIPTION = "FluidPyPLC solves complex pneumatics/oleodynamics circuits' sequences and generates an ST code to use on any PLC to run those sequences"
 
@@ -18,7 +18,7 @@ setup(
     install_requires=['PySimpleGUI', 'matplotlib', 'tk', 'pillow'],
     entry_points={
         'console_scripts': [
-            'FluidPyPLC = FluidPyPLC.main:f',
+            'FluidPyPLC = FluidPyPLC.f:main',
         ]},
     keywords=['python', 'plc', 'fluidsim', 'structured text', 'plc python', 'codesys', 'circuits', 'pneumatics', 'oleodynamics', 'plc programming'],
     classifiers=[

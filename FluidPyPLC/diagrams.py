@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from data import Data
+from .data import Data
 
 # get the x and y axis for the Phase's diagrams
 def xy_axis(number_of_pistons, pistons_labels, sequence):
@@ -77,7 +77,7 @@ def diagrams(s):
         diagram.axis('off')
         diagram.axis('off')
         plt.subplots_adjust(left=0.190, bottom=0.210, right=0.900, top=0.970, wspace=None, hspace=1.000)
-        plt.savefig('../Plots/phases_diagram.png')
+        plt.savefig('./Plots/phases_diagram.png')
 
     except:
         if number_of_pistons == 1:

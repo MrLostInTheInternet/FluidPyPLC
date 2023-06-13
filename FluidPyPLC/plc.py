@@ -1,6 +1,6 @@
 import math
-from data import Data
-from set_switches import rotate
+from .data import Data
+from .set_switches import rotate
 
 class Plc():
     def __init__(self, s):
@@ -121,10 +121,8 @@ class Plc():
         plc_seen_IO = []
         n_of_plcs_8bit = 1 + math.floor(len(set(d.sequence)) / 7)
         d.lswitch = rotate(d.lswitch, 1)
-        print(plc_groups)
-        print(solenoids)
         # open the plc.txt file and write the code, in ST language, on it
-        dir = "../plc/plc.st"
+        dir = "./plc/plc.st"
         with open(dir,'w') as f:
             #relays variables ----------------------------------------------------
             f.write('PROGRAM PLC_PRG\n')
