@@ -41,13 +41,13 @@ def show_plot():
 # args management
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='FluidPy 2.0',
+        description='FluidPyPLC',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=textwrap.dedent('''Example:
-        fluid.py --gui # to use the user interface mode
-        fluid.py -t # to use the terminal version
-        fluid.py --plot # to display the Diagrams's fases
-        fluid.py --plc # to display the plc ST code
+        f.py --gui # to use the user interface mode
+        f.py -t # to use the terminal version
+        f.py --plot # to display the Diagrams's fases
+        f.py --plc # to display the plc ST code
         ''')
     )
     parser.add_argument('-g', '--gui', action='store_true', help='gui mode')
