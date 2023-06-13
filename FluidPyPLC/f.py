@@ -65,9 +65,14 @@ def main():
     elif args.terminal:
         # terminal mode
         terminal()
+        exit(0)
     elif args.plot:
         # show plot
-        show_plot()
+        try:
+            show_plot()
+            exit(0)
+        except:
+            print("There is no folder Plots. Create one.")
     elif args.plc:
         try:
             # open plc ST code with notepad
@@ -77,5 +82,6 @@ def main():
     else:
         # default argument
         terminal()
+        exit(0)
 
 main()
