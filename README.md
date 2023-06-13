@@ -39,24 +39,20 @@ For Linux users you can install it via apt:
 ```bash
 sudo apt-get install python3 python3-pip
 ```
-Then you need to install the modules using pip install:
-```bash
-python3 -m pip install -r requirements.txt
-```
-Now you are ready to install FluidPyPLC
-
 ## ⬇️ Installation <a name="installation"></a>
+Use pip to install FluidPyPLC:
 ```bash
-git clone https://github.com/MrLostInTheInternet/PLC_FluidPy.git
-
+pip install FluidPyPLC
 ```
+
+P.S. I still have to manage the files that will be saved by FluidPyPLC and where to store them. For now, you have to create a dedicated folder to make it work. <br>
+I will manage to do that ASAP.
+
 
 ## 🎈 Usage <a name="usage"></a>
-
+You can invoke the command from anywhere on your terminal:
 ```bash
-cd FluidPyPLC/src
-
-python3 f.py
+FluidPyPLC
 ```
 
 To view all the usage's methods use the tags ```--help``` or ```-h```.
