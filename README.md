@@ -1,8 +1,10 @@
 <p align="center">
     <h1 align="center">
-        🔗 FluidPy 2.0
+        🔗 PLC_FluidPy
     </h1>
-    <p align="center">Updated version of FluidPy</p>
+    <p align="center">
+    Analyzer of Circuits' Sequences. PLC ST code Generator <br>
+    Updated version of FluidPy</p>
 </p>
 
 <p align="center">
@@ -20,10 +22,10 @@
 - [✍️ Authors ](#️authors)
 # 🏁 Getting Started <a name = "getting-started"></a>
 
-FluidPy 2.0 is an updated version of the previous FluidPy, it is more light and efficient than before. It has new settings and can handle more sequence's cases.
+PLC_FluidPy is an updated version of the previous FluidPy, it is more light and efficient than before. It has new settings and can handle more sequence's cases.
 Enjoy the new version.
 
-<h1>What is FluidPy?</h1>
+<h1>What is PLC_FluidPy?</h1>
 It's a python script that takes any sequence of pistons e.g. A+/B-/B+/A-. It solves all the blocks of the inserted sequence, it draws the Phases' Diagram, and converts the solution in Structured Text for PLCs. The GUI mode will show you the data structure of the sequence, the plc ST code and the plot. You can then copy and paste the ST code in any program you want that reads it, e.g. CODESYS.
 (I tried with CODESYS and works)
 
@@ -41,18 +43,18 @@ Then you need to install the modules using pip install:
 ```bash
 python3 -m pip install -r requirements.txt
 ```
-Now you are ready to install FluidPy 2.0
+Now you are ready to install PLC_FluidPy
 
 ## ⬇️ Installation <a name="installation"></a>
 ```bash
-git clone https://github.com/MrLostInTheInternet/FluidPy2.0.git
+git clone https://github.com/MrLostInTheInternet/PLC_FluidPy.git
 
 ```
 
 ## 🎈 Usage <a name="usage"></a>
 
 ```bash
-cd FluidPy2.0/src
+cd PLC_FluidPy/src
 
 python3 f.py
 ```
