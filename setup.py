@@ -2,11 +2,11 @@ from setuptools import setup, find_packages
 
 VERSION = '0.0.1'
 DESCRIPTION = 'FluidSim Circuits Analyzer & PLC ST Code Generator'
-LONG_DESCRIPTION = "PLCFluidPy solves complex pneumatics/oleodynamics circuits' sequences and generates an ST code to use on any PLC to run those sequences"
+LONG_DESCRIPTION = "FluidPyPLC solves complex pneumatics/oleodynamics circuits' sequences and generates an ST code to use on any PLC to run those sequences"
 
 # Setting up
 setup(
-    name="PLCFluidPy",
+    name="FluidPyPLC",
     version=VERSION,
     author="MrLostInTheInternet (Eugen Iofciu Vasile)",
     author_email="<eugen.iofciuvasile@hotmail.com>",
