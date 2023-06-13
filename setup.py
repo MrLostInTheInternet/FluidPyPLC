@@ -16,6 +16,10 @@ setup(
     long_description=LONG_DESCRIPTION,
     packages=find_packages(),
     install_requires=['PySimpleGUI', 'matplotlib', 'tk', 'pillow'],
+    entry_points={
+        'console_scripts': [
+            'FluidPyPLC = FluidPyPLC.main:f',
+        ]},
     keywords=['python', 'plc', 'fluidsim', 'structured text', 'plc python', 'codesys', 'circuits', 'pneumatics', 'oleodynamics', 'plc programming'],
     classifiers=[
         "Development Status :: 1 - Planning",
