@@ -1,11 +1,14 @@
 import math
+import os
 from FluidPyPLC.data import Data
 from FluidPyPLC.set_switches import rotate
+from FluidPyPLC.f import path
 
 class Plc():
     def __init__(self, s):
         self.run(s)
     def run(self, s):
+        print(path)
         d = Data(s)
         solenoids = []
         g = len(d.groups)
@@ -122,7 +125,7 @@ class Plc():
         n_of_plcs_8bit = 1 + math.floor(len(set(d.sequence)) / 7)
         d.lswitch = rotate(d.lswitch, 1)
         # open the plc.txt file and write the code, in ST language, on it
-        dir = "./plc/plc.st"
+        dir = os.path.join(path, 'plc/plc.st')
         with open(dir,'w') as f:
             #relays variables ----------------------------------------------------
             f.write('PROGRAM PLC_PRG\n')

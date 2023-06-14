@@ -2,7 +2,9 @@ from FluidPyPLC.get_sequence import *
 from FluidPyPLC.data import Data
 from FluidPyPLC.plc import Plc
 from FluidPyPLC.diagrams import diagrams
+from FluidPyPLC.f import path
 
+import os
 import PySimpleGUI as sg
 
 sg.theme('DarkTanBlue')
@@ -112,7 +114,7 @@ class Gui():
                         self.data = elaborate_data(self.sequence)
                         diagrams(self.sequence)
                         Plc(self.sequence)
-                        dir1 = './plc/plc.st'
+                        dir1 = os.path.join(path, 'plc/plc.st')
                         with open(dir1, 'r') as p:
                             Text = p.readlines()
                             Text = ''.join(line for line in Text)
@@ -138,7 +140,7 @@ class Gui():
 
             if event == "Display Phases' Diagram" and check:
                 toggle_bool2 = not toggle_bool2
-                im = './Plots/phases_diagram.png'
+                im = os.path.join(path, 'Plots/phases_diagram.png')
                 window['-IMAGE-'].update(im, visible = toggle_bool2)
                 window['image_column'].update(visible = toggle_bool2 or toggle_bool3)
 
