@@ -45,6 +45,15 @@ Use pip to install FluidPyPLC:
 pip install FluidPyPLC
 ```
 
+Before you use it, you have to config the config.json file. Change the "folder_path" in the config.json file:
+
+```bash
+config.json :
+{
+  "folder_path": "full/path/to/the/folder/that/you/want"
+}
+```
+
 P.S. I still have to manage the files that will be saved by FluidPyPLC and where to store them. For now, you have to create a dedicated folder to make it work. <br>
 I will manage to do that ASAP.
 
