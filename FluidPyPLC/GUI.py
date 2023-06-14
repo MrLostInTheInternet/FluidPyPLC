@@ -129,9 +129,12 @@ class Gui():
                 window['table'].update('')
             
             if event == 'Delete':
-                self.sequence.pop()
-                sequence = sequence[:-3]
-                window['text'].update(sequence)
+                try:
+                    self.sequence.pop()
+                    sequence = sequence[:-3]
+                    window['text'].update(sequence)
+                except:
+                    print("There is no sequence to delete")
 
             if event == "Display Phases' Diagram" and check:
                 toggle_bool2 = not toggle_bool2
