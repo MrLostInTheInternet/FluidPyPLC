@@ -1,8 +1,10 @@
 from setuptools import setup, find_packages
 
-VERSION = '0.1.3'
+VERSION = '0.1.4'
 DESCRIPTION = 'FluidSim Circuits Analyzer & PLC ST Code Generator'
-LONG_DESCRIPTION = "FluidPyPLC solves complex pneumatics/oleodynamics circuits' sequences and generates an ST code to use on any PLC to run those sequences"
+
+with open("FluidPyPLC/README.md", "r") as f:
+    long_description = f.read()
 
 # Setting up
 setup(
@@ -13,7 +15,8 @@ setup(
     license="GPLv3",
     description=DESCRIPTION,
     long_description_content_type="text/markdown",
-    long_description=LONG_DESCRIPTION,
+    long_description=long_description,
+    url="https://github.com/MrLostInTheInternet/FluidPyPLC",
     packages=find_packages(),
     install_requires=['PySimpleGUI', 'matplotlib', 'tk', 'pillow'],
     entry_points={
