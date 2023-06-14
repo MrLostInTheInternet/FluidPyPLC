@@ -2,13 +2,17 @@ from FluidPyPLC.get_sequence import *
 from FluidPyPLC.data import Data
 from FluidPyPLC.plc import Plc
 from FluidPyPLC.diagrams import diagrams
-from FluidPyPLC.f import path
 
+import json
 import os
 import PySimpleGUI as sg
 
 sg.theme('DarkTanBlue')
 sg.set_options(font=('Helvetica', 14))
+
+with open("config.json") as f:
+    config = json.load(f)
+    path = config["folder_path"]
 
 def collapse(layout, key, visible):
     return sg.pin(sg.Column(layout, key=key, visible=visible))

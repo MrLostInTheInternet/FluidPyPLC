@@ -1,7 +1,11 @@
+import json
 import os
 import matplotlib.pyplot as plt
 from FluidPyPLC.data import Data
-from FluidPyPLC.f import path
+
+with open("config.json") as f:
+    config = json.load(f)
+    path = config["folder_path"]
 
 # get the x and y axis for the Phase's diagrams
 def xy_axis(number_of_pistons, pistons_labels, sequence):

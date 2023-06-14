@@ -1,14 +1,17 @@
 import math
 import os
+import json
 from FluidPyPLC.data import Data
 from FluidPyPLC.set_switches import rotate
-from FluidPyPLC.f import path
+
+with open("config.json") as f:
+    config = json.load(f)
+    path = config["folder_path"]
 
 class Plc():
     def __init__(self, s):
         self.run(s)
     def run(self, s):
-        print(path)
         d = Data(s)
         solenoids = []
         g = len(d.groups)

@@ -14,8 +14,6 @@ import subprocess
 import textwrap
 import os
 
-global path
-
 def create_folders(folder_path):
     plots_folder = os.path.join(folder_path, 'Plots')
     plc_folder = os.path.join(folder_path, 'plc')
@@ -48,6 +46,7 @@ def main():
     parser.add_argument('-g', '--gui', action='store_true', help='gui mode')
     parser.add_argument('-t', '--terminal', action='store_true', help='terminal mode')
     parser.add_argument('--plc', action='store_true', help='show plc code')
+    parser.add_argument('-f', '--folder', type=str, help='Config.json folder path to create the Plot and plc folders')
     args = parser.parse_args()
     try:
         with open("config.json") as f:
@@ -56,6 +55,10 @@ def main():
         print(f"Loaded path from config.json: '{path}'.")
     except Exception:
         None
+    if args.folder:
+        folder_path = args.folder
+        create_folders(folder_path)
+        exit(0)
     if args.gui:
         # gui mode
         gui = Gui()
@@ -77,5 +80,3 @@ def main():
         # default argument
         terminal()
         exit(0)
-
-main()
