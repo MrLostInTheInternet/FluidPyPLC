@@ -1,6 +1,6 @@
 import math
-from .data import Data
-from .set_switches import rotate
+from FluidPyPLC.data import Data
+from FluidPyPLC.set_switches import rotate
 
 class Plc():
     def __init__(self, s):
@@ -134,7 +134,7 @@ class Plc():
                 f.write('\tEB' + str(i) + " : BYTE;\n")
             f.write('END_VAR\n\n')
 
-            f.write('//Inputs and Outputs connections\n//AB* are FLUIDSIM PLC IN, EB* are FLUIDSIM PLC OUT\n')
+            f.write('//Inputs and Outputs connections\n`n//AB* are FLUIDSIM PLC IN, EB* are FLUIDSIM PLC OUT\n')
             for i in range(l):
                 if d.sequence[i] not in plc_seen_IO:
                     f.write(f'//{d.sequence[i]} -> {solenoids[i]}\t\t')

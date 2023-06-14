@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from .data import Data
+from FluidPyPLC.data import Data
 
 # get the x and y axis for the Phase's diagrams
 def xy_axis(number_of_pistons, pistons_labels, sequence):

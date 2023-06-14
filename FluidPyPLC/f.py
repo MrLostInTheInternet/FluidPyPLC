@@ -3,10 +3,10 @@
 from tkinter import *
 from PIL import Image, ImageTk
 
-from .get_sequence import Sequence
-from .diagrams import diagrams
-from .plc import Plc
-from .GUI import Gui
+from FluidPyPLC.get_sequence import Sequence
+from FluidPyPLC.diagrams import diagrams
+from FluidPyPLC.plc import Plc
+from FluidPyPLC.GUI import Gui
 
 import argparse
 import subprocess
