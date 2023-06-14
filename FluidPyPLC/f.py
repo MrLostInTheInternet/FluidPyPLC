@@ -10,9 +10,16 @@ from FluidPyPLC.GUI import Gui
 
 import argparse
 import json
+import os
+import pkg_resources
 import subprocess
 import textwrap
-import os
+
+
+config_file_path = pkg_resources.resource_filename('FluidPyPLC', 'resources/config.json')
+with open(config_file_path) as f:
+    config = json.load(f)
+    path = config["folder_path"]
 
 def create_folders(folder_path):
     plots_folder = os.path.join(folder_path, 'Plots')
@@ -48,13 +55,6 @@ def main():
     parser.add_argument('--plc', action='store_true', help='show plc code')
     parser.add_argument('-f', '--folder', type=str, help='Config.json folder path to create the Plot and plc folders')
     args = parser.parse_args()
-    try:
-        with open("config.json") as f:
-            config = json.load(f)
-        path = config["folder_path"]
-        print(f"Loaded path from config.json: '{path}'.")
-    except Exception:
-        None
     if args.folder:
         folder_path = args.folder
         create_folders(folder_path)

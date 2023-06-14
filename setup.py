@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-VERSION = '0.1.6'
+VERSION = '0.1.7'
 DESCRIPTION = 'FluidSim Circuits Analyzer & PLC ST Code Generator'
 
 with open("FluidPyPLC/README.md", "r") as f:
@@ -18,10 +18,14 @@ setup(
     long_description=long_description,
     url="https://github.com/MrLostInTheInternet/FluidPyPLC",
     packages=find_packages(),
+    package_data={
+        'FluidPyPLC': ['resources/config.json'],
+    },
+    include_package_data=True,
     install_requires=['PySimpleGUI', 'matplotlib', 'tk', 'pillow'],
     entry_points={
         'console_scripts': [
-            'FluidPyPLC = FluidPyPLC.f:main',
+            'fluidpy = FluidPyPLC.f:main',
         ]},
     keywords=['python', 'plc', 'fluidsim', 'structured text', 'plc python', 'codesys', 'circuits', 'pneumatics', 'oleodynamics', 'plc programming'],
     classifiers=[

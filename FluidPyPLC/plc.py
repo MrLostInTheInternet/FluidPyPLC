@@ -1,10 +1,13 @@
 import math
-import os
 import json
+import os
+import pkg_resources
+
 from FluidPyPLC.data import Data
 from FluidPyPLC.set_switches import rotate
 
-with open("config.json") as f:
+config_file_path = pkg_resources.resource_filename('FluidPyPLC', 'resources/config.json')
+with open(config_file_path) as f:
     config = json.load(f)
     path = config["folder_path"]
 

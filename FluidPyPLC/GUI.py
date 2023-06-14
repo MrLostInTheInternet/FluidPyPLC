@@ -5,12 +5,15 @@ from FluidPyPLC.diagrams import diagrams
 
 import json
 import os
+import pkg_resources
 import PySimpleGUI as sg
 
 sg.theme('DarkTanBlue')
 sg.set_options(font=('Helvetica', 14))
 
-with open("config.json") as f:
+
+config_file_path = pkg_resources.resource_filename('FluidPyPLC', 'resources/config.json')
+with open(config_file_path) as f:
     config = json.load(f)
     path = config["folder_path"]
 

@@ -1,9 +1,11 @@
 import json
-import os
 import matplotlib.pyplot as plt
+import os
+import pkg_resources
 from FluidPyPLC.data import Data
 
-with open("config.json") as f:
+config_file_path = pkg_resources.resource_filename('FluidPyPLC', 'resources/config.json')
+with open(config_file_path) as f:
     config = json.load(f)
     path = config["folder_path"]
 
