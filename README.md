@@ -54,14 +54,23 @@ config.json :
 }
 ```
 
-P.S. I still have to manage the files that will be saved by FluidPyPLC and where to store them. For now, you have to create a dedicated folder to make it work. <br>
-I will manage to do that ASAP.
+Now you need to create the Plot and the plc folder. You can do it manually or you can use:
+```bash
+fluidpy --folder path/to/your/folder
+```
+And FluidPyPLC will create the two folders for you.
 
+[+] For Windows Users. If you want an icon to execute the GUI faster -> create a new shortcut and assign the Target:
+```bash
+Target: fluidpy.exe --gui
+```
+Windows will automatically locate the fluidpy.exe script in your Python/scripts folder and you can launch the app from your icon now.
 
+[Use my favicon if you want]
 ## 🎈 Usage <a name="usage"></a>
 You can invoke the command from anywhere on your terminal:
 ```bash
-FluidPyPLC
+fluidpy
 ```
 
 To view all the usage's methods use the tags ```--help``` or ```-h```.
