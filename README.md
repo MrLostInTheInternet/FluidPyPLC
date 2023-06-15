@@ -67,7 +67,7 @@ fluidpy
 To view all the usage's methods use the tags ```--help``` or ```-h```.
  
 ## ⚙️ CODESYS configuration <a name="codesys_configuration"></a>
-[+] To test your PLC's sequence code you can use the plc.py and one of the CONFIGURATION pdfs in the fluidsim folder.
+[+] To test your PLC's sequence code you can use the plc.py and one of the CONFIGURATION pdfs in the Configuration folder.
 
 
 [+] If you want to test the code with the CODESYS Visualization, use the plc.bak2.py as plc.py, and the tutorial below. 
