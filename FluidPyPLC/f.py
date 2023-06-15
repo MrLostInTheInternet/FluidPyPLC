@@ -17,9 +17,13 @@ import textwrap
 
 
 config_file_path = pkg_resources.resource_filename('FluidPyPLC', 'resources/config.json')
-with open(config_file_path) as f:
-    config = json.load(f)
-    path = config["folder_path"]
+try:
+    with open(config_file_path) as f:
+        config = json.load(f)
+        path = config["folder_path"]
+except Exception as e:
+    print(e)
+
 
 def create_folders(folder_path):
     plots_folder = os.path.join(folder_path, 'Plots')
@@ -31,6 +35,14 @@ def create_folders(folder_path):
 
     print(f"Created 'Plots' and 'plc' folders inside '{folder_path}'.")
 
+    # Set this path to the config.json file
+    with open(config_file_path) as f:
+        config = json.load(f)
+    config["folder_path"] = folder_path
+
+    with open(config_file_path, 'w') as f:
+        json.dump(config, f, indent=4)
+
 # function to start the terminal version
 def terminal():
     sequence = Sequence()
@@ -40,7 +52,6 @@ def terminal():
 
 # args management
 def main():
-    global path
     parser = argparse.ArgumentParser(
         description='FluidPyPLC',
         formatter_class=argparse.RawDescriptionHelpFormatter,
