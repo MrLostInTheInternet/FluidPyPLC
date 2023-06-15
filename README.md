@@ -45,20 +45,11 @@ Use pip to install FluidPyPLC:
 pip install FluidPyPLC
 ```
 
-Before you use it, you have to config the config.json file. Change the "folder_path" in the config.json file:
-
-```bash
-config.json :
-{
-  "folder_path": "full/path/to/the/folder/that/you/want"
-}
-```
-
-Now you need to create the Plot and the plc folder. You can do it manually or you can use:
+Now you need to set a main folder where to save your data, and you need to create there the Plot and the plc folder. You can do it manually or you can use:
 ```bash
 fluidpy --folder path/to/your/folder
 ```
-And FluidPyPLC will create the two folders for you.
+And FluidPyPLC will create the two folders for you, and change the config.json file "folder_path" to "your folder path".
 
 [+] For Windows Users. If you want an icon to execute the GUI faster -> create a new shortcut and assign the Target:
 ```bash
