@@ -3,8 +3,8 @@ import json
 import os
 import pkg_resources
 
-from FluidPyPLC.data import Data
-from FluidPyPLC.set_switches import rotate
+from data import Data
+from set_switches import rotate
 
 config_file_path = pkg_resources.resource_filename('FluidPyPLC', 'resources/config.json')
 with open(config_file_path) as f:
@@ -184,7 +184,7 @@ class Plc():
                 f.write(f'{relay_memory_label[0]} := TRUE;\n\t')
                 f.write('END_IF;\n')
                 # then we need to close the IF statement *
-                f.write('\nEND_IF;\n')
+                f.write('\nEND_IF;\n\n')
             else:
                 # if the first group is composed by just one stroke then we pass to the next group by activating the first memory
                 stroke_index = 1
@@ -192,7 +192,7 @@ class Plc():
                 f.write(f'{relay_memory_label[0]} := TRUE;\n\t')
                 f.write('END_IF;\n')
                 # we close the IF statement *
-                f.write('END_IF;\n')
+                f.write('END_IF;\n\n')
             # first group is Done!
 
             # first memory relay activation
