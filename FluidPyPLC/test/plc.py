@@ -91,14 +91,18 @@ class Plc():
                 plc_seen_IO_description.append(solenoids[i])
                 plc_index_8bit = 1
                 plc_range_8bit += 1
-                for j in range(g):
+                if merge:
+                    len_g = g + 1
+                else:
+                    len_g = g
+                for j in range(len_g):
                     for z in range(len(plc_groups[j])):
                         if solenoids[i] in plc_groups[j][z]:
                             plc_groups[j][z] = "AB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
                 solenoids[i] = "AB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
                 plc_seen_IO.append(solenoids[i])
                 plc_index_8bit += 1
-        
+        print(plc_groups)
         plc_range_8bit = 0
         plc_index_8bit = 1
         plc_seen_IO_description = []
@@ -143,7 +147,7 @@ class Plc():
                 f.write('\tEB' + str(i) + " : BYTE;\n")
             f.write('END_VAR\n\n')
 
-            f.write('//Inputs and Outputs connections\n`n//AB* are FLUIDSIM PLC IN, EB* are FLUIDSIM PLC OUT\n')
+            f.write('//Inputs and Outputs connections\n\n//AB* are FLUIDSIM PLC IN, EB* are FLUIDSIM PLC OUT\n')
             for i in range(l):
                 if d.sequence[i] not in plc_seen_IO:
                     f.write(f'//{d.sequence[i]} -> {solenoids[i]}\t\t')

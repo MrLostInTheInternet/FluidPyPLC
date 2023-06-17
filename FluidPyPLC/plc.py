@@ -91,7 +91,7 @@ class Plc():
                 plc_seen_IO_description.append(solenoids[i])
                 plc_index_8bit = 1
                 plc_range_8bit += 1
-                for j in range(g):
+                for j in range(len(d.groups)):
                     for z in range(len(plc_groups[j])):
                         if solenoids[i] in plc_groups[j][z]:
                             plc_groups[j][z] = "AB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
@@ -143,7 +143,7 @@ class Plc():
                 f.write('\tEB' + str(i) + " : BYTE;\n")
             f.write('END_VAR\n\n')
 
-            f.write('//Inputs and Outputs connections\n`n//AB* are FLUIDSIM PLC IN, EB* are FLUIDSIM PLC OUT\n')
+            f.write('//Inputs and Outputs connections\n\n//AB* are FLUIDSIM PLC IN, EB* are FLUIDSIM PLC OUT\n')
             for i in range(l):
                 if d.sequence[i] not in plc_seen_IO:
                     f.write(f'//{d.sequence[i]} -> {solenoids[i]}\t\t')
@@ -184,7 +184,7 @@ class Plc():
                 f.write(f'{relay_memory_label[0]} := TRUE;\n\t')
                 f.write('END_IF;\n')
                 # then we need to close the IF statement *
-                f.write('\nEND_IF;\n')
+                f.write('END_IF;\n\n')
             else:
                 # if the first group is composed by just one stroke then we pass to the next group by activating the first memory
                 stroke_index = 1
@@ -192,11 +192,11 @@ class Plc():
                 f.write(f'{relay_memory_label[0]} := TRUE;\n\t')
                 f.write('END_IF;\n')
                 # we close the IF statement *
-                f.write('END_IF;\n')
+                f.write('END_IF;\n\n')
             # first group is Done!
 
             # first memory relay activation
-            f.write(f'\nIF {relay_memory_label[0]} THEN\n')
+            f.write(f'IF {relay_memory_label[0]} THEN\n')
             if merge:
                 # if the last group can be merged with the first one, then we include those strokes
                 merged_groups = []
@@ -225,7 +225,7 @@ class Plc():
             stroke_index = stroke_index_return
             for j in range(number_of_memories):
                 finish_group = 0
-                f.write(f'\nIF {relay_memory_label[j]} THEN\n\t')
+                f.write(f'IF {relay_memory_label[j]} THEN\n\t')
                 while finish_group < len(plc_groups[j + 1]):
                     # while the group isn't finished continue to write the triggered limit switches and solenoids
                     if finish_group != (len(plc_groups[j+1]) - 1):
