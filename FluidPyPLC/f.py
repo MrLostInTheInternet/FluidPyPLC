@@ -9,7 +9,6 @@
 # Enjoy my little project. Thanks to all for the support.
 
 from tkinter import *
-from PIL import Image, ImageTk
 
 from FluidPyPLC.get_sequence import Sequence
 from FluidPyPLC.diagrams import diagrams
