@@ -1,0 +1,938 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://www.plcopen.org/xml/tc6_0200">
+	<fileHeader companyName="" productName="CODESYS" productVersion="CODESYS V3.5 SP19" creationDateTime="2023-06-20T19:32:15.932717" />
+	<contentHeader name="" modificationDateTime="2023-06-20T19:32:15.932717">
+		<coordinateInfo>
+			<fbd>
+				<scaling x="1" y="1" />
+			</fbd>
+			<ld>
+				<scaling x="1" y="1" />
+			</ld>
+			<sfc>
+				<scaling x="1" y="1" />
+			</sfc>
+		</coordinateInfo>
+		<addData>
+			<data name="http://www.3s-software.com/plcopenxml/projectinformation" handleUnknown="implementation">
+				<ProjectInformation />
+				</data>
+			</addData>
+	</contentHeader>
+	<types>
+		<dataTypes />
+		<pous>
+			<pou name="PLC_PRG_32" pouType="program">
+				<interface>
+					<localVars>
+					</localVars>
+				</interface>
+				<body>
+					<LD>
+						<leftPowerRail localId="0">
+							<position x="0" y="0" />
+							<connectionPointOut formalParameter="none" />
+						</leftPowerRail>
+<comment localId="1" height="0" width="0">
+				<position x="0" y="0" />
+				<content>
+					<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+				</content>
+			</comment>
+			<vendorElement localId="2">
+				<position x="0" y="0" />
+					<alternativeText>
+						<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+					</alternativeText>
+				<addData>
+					<data name="http://www.3s-software.com/plcopenxml/fbdelementtype" handleUnknown="implementation">
+						<ElementType xmlns="">networktitle</ElementType>
+					</data>
+				</addData>
+			</vendorElement>
+			<contact localId="3" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="0" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.0</variable>
+			</contact>
+			<contact localId="4" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="3" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.4</variable>
+			</contact>
+			<contact localId="5" negated="true" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="4" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K0</variable>
+			</contact>
+			<contact localId="6" negated="true" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="5" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K1</variable>
+			</contact>
+			<contact localId="7" negated="true" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="6" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K2</variable>
+			</contact>
+			<contact localId="8" negated="true" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="7" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K3</variable>
+			</contact>
+			<contact localId="9" negated="true" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="8" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K4</variable>
+			</contact>
+			<coil localId="10" negated="false" storage="set">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="9" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.1</variable>
+			</coil>
+			<comment localId="11" height="0" width="0">
+				<position x="0" y="0" />
+				<content>
+					<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+				</content>
+			</comment>
+			<vendorElement localId="12">
+				<position x="0" y="0" />
+					<alternativeText>
+						<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+					</alternativeText>
+				<addData>
+					<data name="http://www.3s-software.com/plcopenxml/fbdelementtype" handleUnknown="implementation">
+						<ElementType xmlns="">networktitle</ElementType>
+					</data>
+				</addData>
+			</vendorElement>
+			<contact localId="13" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="0" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.0</variable>
+			</contact>
+			<contact localId="14" negated="true" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="13" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K0</variable>
+			</contact>
+			<contact localId="15" negated="true" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="14" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K1</variable>
+			</contact>
+			<contact localId="16" negated="true" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="15" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K2</variable>
+			</contact>
+			<contact localId="17" negated="true" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="16" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K3</variable>
+			</contact>
+			<contact localId="18" negated="true" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="17" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K4</variable>
+			</contact>
+			<contact localId="19" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="18" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.1</variable>
+			</contact>
+			<coil localId="20" negated="false" storage="set">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="19" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.2</variable>
+			</coil>
+			<contact localId="21" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="18" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.2</variable>
+			</contact>
+			<coil localId="22" negated="false" storage="set">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="21" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.3</variable>
+			</coil>
+			<contact localId="23" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="18" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.3</variable>
+			</contact>
+			<coil localId="24" negated="false" storage="set">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="23" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K0</variable>
+			</coil>
+			<comment localId="25" height="0" width="0">
+				<position x="0" y="0" />
+				<content>
+					<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+				</content>
+			</comment>
+			<vendorElement localId="26">
+				<position x="0" y="0" />
+					<alternativeText>
+						<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+					</alternativeText>
+				<addData>
+					<data name="http://www.3s-software.com/plcopenxml/fbdelementtype" handleUnknown="implementation">
+						<ElementType xmlns="">networktitle</ElementType>
+					</data>
+				</addData>
+			</vendorElement>
+			<contact localId="27" negated="false" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="0" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K0</variable>
+			</contact>
+			<coil localId="28" negated="false" storage="reset">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="27" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.1</variable>
+			</coil>
+			<coil localId="29" negated="false" storage="reset">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="27" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.2</variable>
+			</coil>
+			<coil localId="30" negated="false" storage="reset">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="27" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.3</variable>
+			</coil>
+			<comment localId="31" height="0" width="0">
+				<position x="0" y="0" />
+				<content>
+					<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+				</content>
+			</comment>
+			<vendorElement localId="32">
+				<position x="0" y="0" />
+					<alternativeText>
+						<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+					</alternativeText>
+				<addData>
+					<data name="http://www.3s-software.com/plcopenxml/fbdelementtype" handleUnknown="implementation">
+						<ElementType xmlns="">networktitle</ElementType>
+					</data>
+				</addData>
+			</vendorElement>
+			<contact localId="33" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="0" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.3</variable>
+			</contact>
+			<contact localId="34" negated="false" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="33" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K0</variable>
+			</contact>
+			<coil localId="35" negated="false" storage="set">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="34" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.4</variable>
+			</coil>
+			<comment localId="36" height="0" width="0">
+				<position x="0" y="0" />
+				<content>
+					<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+				</content>
+			</comment>
+			<vendorElement localId="37">
+				<position x="0" y="0" />
+					<alternativeText>
+						<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+					</alternativeText>
+				<addData>
+					<data name="http://www.3s-software.com/plcopenxml/fbdelementtype" handleUnknown="implementation">
+						<ElementType xmlns="">networktitle</ElementType>
+					</data>
+				</addData>
+			</vendorElement>
+			<contact localId="38" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="0" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.6</variable>
+			</contact>
+			<contact localId="39" negated="false" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="38" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K1</variable>
+			</contact>
+			<coil localId="40" negated="false" storage="set">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="39" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.1</variable>
+			</coil>
+			<comment localId="41" height="0" width="0">
+				<position x="0" y="0" />
+				<content>
+					<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+				</content>
+			</comment>
+			<vendorElement localId="42">
+				<position x="0" y="0" />
+					<alternativeText>
+						<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+					</alternativeText>
+				<addData>
+					<data name="http://www.3s-software.com/plcopenxml/fbdelementtype" handleUnknown="implementation">
+						<ElementType xmlns="">networktitle</ElementType>
+					</data>
+				</addData>
+			</vendorElement>
+			<contact localId="43" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="0" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.1</variable>
+			</contact>
+			<contact localId="44" negated="false" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="43" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K2</variable>
+			</contact>
+			<coil localId="45" negated="false" storage="set">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="44" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.5</variable>
+			</coil>
+			<comment localId="46" height="0" width="0">
+				<position x="0" y="0" />
+				<content>
+					<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+				</content>
+			</comment>
+			<vendorElement localId="47">
+				<position x="0" y="0" />
+					<alternativeText>
+						<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+					</alternativeText>
+				<addData>
+					<data name="http://www.3s-software.com/plcopenxml/fbdelementtype" handleUnknown="implementation">
+						<ElementType xmlns="">networktitle</ElementType>
+					</data>
+				</addData>
+			</vendorElement>
+			<contact localId="48" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="0" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.2</variable>
+			</contact>
+			<contact localId="49" negated="false" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="48" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K3</variable>
+			</contact>
+			<coil localId="50" negated="false" storage="set">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="49" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.6</variable>
+			</coil>
+			<comment localId="51" height="0" width="0">
+				<position x="0" y="0" />
+				<content>
+					<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+				</content>
+			</comment>
+			<vendorElement localId="52">
+				<position x="0" y="0" />
+					<alternativeText>
+						<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+					</alternativeText>
+				<addData>
+					<data name="http://www.3s-software.com/plcopenxml/fbdelementtype" handleUnknown="implementation">
+						<ElementType xmlns="">networktitle</ElementType>
+					</data>
+				</addData>
+			</vendorElement>
+			<contact localId="53" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="0" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.3</variable>
+			</contact>
+			<contact localId="54" negated="false" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="53" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K4</variable>
+			</contact>
+			<coil localId="55" negated="false" storage="set">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="54" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.4</variable>
+			</coil>
+			<comment localId="56" height="0" width="0">
+				<position x="0" y="0" />
+				<content>
+					<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+				</content>
+			</comment>
+			<vendorElement localId="57">
+				<position x="0" y="0" />
+					<alternativeText>
+						<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+					</alternativeText>
+				<addData>
+					<data name="http://www.3s-software.com/plcopenxml/fbdelementtype" handleUnknown="implementation">
+						<ElementType xmlns="">networktitle</ElementType>
+					</data>
+				</addData>
+			</vendorElement>
+			<contact localId="58" negated="false" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="0" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K0</variable>
+			</contact>
+			<contact localId="59" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="58" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.4</variable>
+			</contact>
+			<coil localId="60" negated="false" storage="set">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="59" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.5</variable>
+			</coil>
+			<contact localId="61" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="58" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.5</variable>
+			</contact>
+			<coil localId="62" negated="false" storage="set">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="61" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.6</variable>
+			</coil>
+			<contact localId="63" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="58" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.6</variable>
+			</contact>
+			<coil localId="64" negated="false" storage="set">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="63" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K1</variable>
+			</coil>
+			<coil localId="65" negated="false" storage="reset">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="64" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K0</variable>
+			</coil>
+			<contact localId="66" negated="true" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="58" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K0</variable>
+			</contact>
+			<coil localId="67" negated="false" storage="reset">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="66" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.4</variable>
+			</coil>
+			<coil localId="68" negated="false" storage="reset">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="67" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.5</variable>
+			</coil>
+			<coil localId="69" negated="false" storage="reset">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="68" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.6</variable>
+			</coil>
+			<comment localId="70" height="0" width="0">
+				<position x="0" y="0" />
+				<content>
+					<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+				</content>
+			</comment>
+			<vendorElement localId="71">
+				<position x="0" y="0" />
+					<alternativeText>
+						<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+					</alternativeText>
+				<addData>
+					<data name="http://www.3s-software.com/plcopenxml/fbdelementtype" handleUnknown="implementation">
+						<ElementType xmlns="">networktitle</ElementType>
+					</data>
+				</addData>
+			</vendorElement>
+			<contact localId="72" negated="false" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="0" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K1</variable>
+			</contact>
+			<contact localId="73" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="72" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.1</variable>
+			</contact>
+			<coil localId="74" negated="false" storage="set">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="73" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K2</variable>
+			</coil>
+			<coil localId="75" negated="false" storage="reset">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="74" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K1</variable>
+			</coil>
+			<contact localId="76" negated="true" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="72" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K1</variable>
+			</contact>
+			<coil localId="77" negated="false" storage="reset">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="76" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.1</variable>
+			</coil>
+			<comment localId="78" height="0" width="0">
+				<position x="0" y="0" />
+				<content>
+					<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+				</content>
+			</comment>
+			<vendorElement localId="79">
+				<position x="0" y="0" />
+					<alternativeText>
+						<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+					</alternativeText>
+				<addData>
+					<data name="http://www.3s-software.com/plcopenxml/fbdelementtype" handleUnknown="implementation">
+						<ElementType xmlns="">networktitle</ElementType>
+					</data>
+				</addData>
+			</vendorElement>
+			<contact localId="80" negated="false" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="0" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K2</variable>
+			</contact>
+			<contact localId="81" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="80" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.5</variable>
+			</contact>
+			<coil localId="82" negated="false" storage="set">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="81" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.2</variable>
+			</coil>
+			<contact localId="83" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="80" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.2</variable>
+			</contact>
+			<coil localId="84" negated="false" storage="set">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="83" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K3</variable>
+			</coil>
+			<coil localId="85" negated="false" storage="reset">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="84" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K2</variable>
+			</coil>
+			<contact localId="86" negated="true" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="80" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K2</variable>
+			</contact>
+			<coil localId="87" negated="false" storage="reset">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="86" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.5</variable>
+			</coil>
+			<coil localId="88" negated="false" storage="reset">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="87" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.2</variable>
+			</coil>
+			<comment localId="89" height="0" width="0">
+				<position x="0" y="0" />
+				<content>
+					<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+				</content>
+			</comment>
+			<vendorElement localId="90">
+				<position x="0" y="0" />
+					<alternativeText>
+						<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+					</alternativeText>
+				<addData>
+					<data name="http://www.3s-software.com/plcopenxml/fbdelementtype" handleUnknown="implementation">
+						<ElementType xmlns="">networktitle</ElementType>
+					</data>
+				</addData>
+			</vendorElement>
+			<contact localId="91" negated="false" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="0" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K3</variable>
+			</contact>
+			<contact localId="92" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="91" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.6</variable>
+			</contact>
+			<coil localId="93" negated="false" storage="set">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="92" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.3</variable>
+			</coil>
+			<contact localId="94" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="91" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.3</variable>
+			</contact>
+			<coil localId="95" negated="false" storage="set">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="94" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K4</variable>
+			</coil>
+			<coil localId="96" negated="false" storage="reset">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="95" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K3</variable>
+			</coil>
+			<contact localId="97" negated="true" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="91" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K3</variable>
+			</contact>
+			<coil localId="98" negated="false" storage="reset">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="97" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.6</variable>
+			</coil>
+			<coil localId="99" negated="false" storage="reset">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="98" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.3</variable>
+			</coil>
+			<comment localId="100" height="0" width="0">
+				<position x="0" y="0" />
+				<content>
+					<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+				</content>
+			</comment>
+			<vendorElement localId="101">
+				<position x="0" y="0" />
+					<alternativeText>
+						<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+					</alternativeText>
+				<addData>
+					<data name="http://www.3s-software.com/plcopenxml/fbdelementtype" handleUnknown="implementation">
+						<ElementType xmlns="">networktitle</ElementType>
+					</data>
+				</addData>
+			</vendorElement>
+			<contact localId="102" negated="false" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="0" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K4</variable>
+			</contact>
+			<contact localId="103" negated="false" storage="none" edge="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="102" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>EB0.4</variable>
+			</contact>
+			<coil localId="104" negated="false" storage="reset">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="103" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K4</variable>
+			</coil>
+			<contact localId="105" negated="true" storage="none">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="102" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>K4</variable>
+			</contact>
+			<coil localId="106" negated="false" storage="reset">
+				<position x="0" y="0" />
+				<connectionPointIn>
+					<connection refLocalId="105" />
+				</connectionPointIn>
+				<connectionPointOut />
+				<variable>AB0.4</variable>
+			</coil>
+			<comment localId="107" height="0" width="0">
+				<position x="0" y="0" />
+				<content>
+					<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+				</content>
+			</comment>
+			<vendorElement localId="108">
+				<position x="0" y="0" />
+					<alternativeText>
+						<xhtml xmlns="http://www.w3.org/1999/xhtml" />
+					</alternativeText>
+				<addData>
+					<data name="http://www.3s-software.com/plcopenxml/fbdelementtype" handleUnknown="implementation">
+						<ElementType xmlns="">networktitle</ElementType>
+					</data>
+				</addData>
+			</vendorElement>
+			<rightPowerRail localId="2147483646">
+<position x="0" y="0" />
+<connectionPointIn />
+</rightPowerRail>
+</LD>
+</body>
+<addData>
+<data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+<ObjectId>96f251c3-0d05-4a7e-8b9e-b3b309eb5966</ObjectId>
+</data>
+</addData>
+</pou>
+</pous>
+</types>
+<instances>
+<configurations />
+</instances>
+<addData>
+<data name="http://www.3s-software.com/plcopenxml/projectstructure" handleUnknown="discard">
+<ProjectStructure>
+<Object Name="PLC_PRG_32" ObjectId="96f251c3-0d05-4a7e-8b9e-b3b309eb5966" />
+</ProjectStructure>
+</data>
+</addData>
+</project>
