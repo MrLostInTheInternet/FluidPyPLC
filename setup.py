@@ -22,7 +22,7 @@ setup(
         'FluidPyPLC': ['resources/config.json'],
     },
     include_package_data=True,
-    install_requires=['PySimpleGUI', 'matplotlib', 'tk', 'pillow'],
+    install_requires=['PySimpleGUI', 'matplotlib', 'tk'],
     entry_points={
         'console_scripts': [
             'fluidpy = FluidPyPLC.f:main',
