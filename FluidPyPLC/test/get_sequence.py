@@ -4,15 +4,15 @@ symbols = "+-"
 # check the correct stroke label
 def stroke_handler(stroke):
     if len(stroke) > 2 or len(stroke) <= 1:
-        print("The piston stroke name must be LETTER+ or LETTER-")
+        print("[!] The piston stroke name must be LETTER+ or LETTER-.")
         return False
     elif stroke == "/":
-        print("The sequence is not completed")
+        print("[!] The sequence is not completed.")
         return False
     elif stroke[0].lower() in alphabet and stroke[1] in symbols:
         return True
     else:
-        print("The format of the inserted stroke is NOT correct! E.g. A+ or B- etc..")
+        print("[!] The format of the inserted stroke is NOT correct! E.g. A+ or B- etc..")
         return False
 
 # insert the stroke in the sequence
@@ -28,13 +28,13 @@ def sequence_handler(stroke, s):
         if res != 0:
             last_index = round(res/2)
             if stroke.upper() == s[last_index]:
-                print("The piston is already in that position")
+                print("[!] The piston is already in that position.")
                 return False
             else:
                 return True
         else:
             if stroke.upper() == s[res]:
-                print("The piston is already in that position RES")
+                print("[!] The piston is already in that position.")
                 return False
             else:
                 return True
@@ -60,5 +60,4 @@ class Sequence():
             if check_stroke and check_sequence:
                 sequence_append(stroke, self.s)
             else:
-                print("Retry")
                 continue

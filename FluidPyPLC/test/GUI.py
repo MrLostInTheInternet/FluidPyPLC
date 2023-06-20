@@ -2,13 +2,14 @@ from get_sequence import *
 from data import Data
 from plc import Plc
 from diagrams import diagrams
+from ld import LD
 
 import json
 import os
 import pkg_resources
 import PySimpleGUI as sg
 
-sg.theme('DarkTanBlue')
+#sg.theme('DarkTanBlue')
 sg.set_options(font=('Helvetica', 14))
 
 
@@ -49,7 +50,7 @@ class Gui():
         self.data = []
     
     def gui_mode(self):
-        section = [[sg.Multiline(expand_x = True, horizontal_scroll=True, size = (50, 29), key = 'plc_code', background_color='#BA9D79', text_color='Black')]]
+        section = [[sg.Multiline(expand_x = True, horizontal_scroll=True, size = (54, 29), key = 'plc_code', background_color='Light Gray', text_color='Black')]]
 
         headings = ('N° of Blocks','Groups', 'N° of Memories','Relay Memories Labels', 'Limit Switch Enabled', 'Limit Switch Disabled')
 
@@ -61,7 +62,8 @@ class Gui():
         layout_data = [[sg.Text('Sequence:', size = (11, 2)), sg.Text(key = 'text', expand_x = True, size = (35, 2), text_color = 'White')],
                     [sg.Text('Insert stroke: ', size = (13, 1)), sg.Input(key = 'input', size = (3, 1), text_color='Black', background_color='White', pad=(10,1)), sg.Text('E.g. A+, b-, etc..',expand_x = True, text_color = 'White', justification='right')],
                     [sg.Button('Finish', size =(10, 1), button_color='Green', mouseover_colors=('Black', 'White'), pad=(3, 20)), sg.Button('Clear', size = (10, 1)), sg.Button('Delete', size = (10, 1)), sg.Button("Display Phases' Diagram", expand_x = True, mouseover_colors=('Black', 'White'), expand_y = False, button_color = ('Black','Gray'))],
-                    [sg.Checkbox('Show PLC ST code', enable_events=True, key = 'show_plc'), sg.Checkbox('Show Data', enable_events=True, key = 'data')],
+                    [sg.Checkbox('Show PLC ST code', enable_events=True, key = 'show_plc'), sg.Checkbox('Show Data', enable_events=True, key = 'data', expand_x=True), sg.Button("Create Ladder Logic", size=(20, 1), mouseover_colors=('Black', 'White'), expand_y = False, button_color = ('Black','Gray'))],
+                    [sg.Output(expand_x=True, size=(0, 6), pad=(10,2), key='log', background_color="Light Gray", text_color="Black")],
                     [collapse(section, 'plc', False)],
                 ]
 
@@ -82,7 +84,10 @@ class Gui():
         toggle_bool2 = False
         toggle_bool3 = False
         check = False
+        get_version = pkg_resources.get_distribution('FluidPyPLC')
+        version = get_version.version
 
+        print(f'>> Welcome to FluidPyPLC v{version}\n\n')
         while True:
             event, values = window.read()
             if event is None:
@@ -91,31 +96,31 @@ class Gui():
                 break
             if event == 'input' + '_Enter':
                 stroke = values['input']
-                check_stroke = stroke_handler(stroke)
                 if stroke == '/':
-                    sg.PopupQuickMessage(' Click finish to terminate the sequence. ', background_color='Blue')
+                    print('[!] Click finish to terminate the sequence.')
                     window['input'].update('')
+                    continue
+                check_stroke = stroke_handler(stroke)
                 
                 if check_stroke:
                     check_sequence = sequence_handler(stroke, self.sequence)
-                else:
-                    sg.PopupQuickMessage(' The Stroke must be LETTER followed by + or - ', background_color='Red')
+                
                 if check_stroke and check_sequence:
                     sequence_append(stroke, self.sequence)
                     sequence += stroke.upper() + '/'
                     window['text'].update(sequence)
                     window['input'].update('')
                 else:
-                    sg.PopupQuickMessage('The Piston is already in that position!', background_color='Red')
+                    
                     window['input'].update('')
             
             if event == 'Finish':
                 if len(self.sequence) == 0:
-                    sg.PopupQuickMessage('No sequence submitted.', background_color='Red')
+                    print('[!] No sequence submitted.')
                 else:
                     check = close_sequence_handler(self.sequence)
                     if check is False:
-                        sg.PopupQuickMessage("The sequence isn't completed.", background_color='Red')
+                        print("[!] The sequence isn't completed.")
                         continue
                     else:
                         self.data = elaborate_data(self.sequence)
@@ -127,6 +132,7 @@ class Gui():
                             Text = ''.join(line for line in Text)
                         window['table'].update(self.data, visible = False)
                         window['plc_code'].update(Text)
+                        print("\n[+] Phases' diagram generated <-and-> PLC ST code generated")
                                 
             if event == 'Clear':
                 self.sequence = []
@@ -136,20 +142,30 @@ class Gui():
                 window['-IMAGE-'].update(visible = False)
                 window['plc_code'].update('')
                 window['table'].update('')
+                window['log'].update('')
+                print(">>> Data cleared")
             
             if event == 'Delete':
                 try:
-                    self.sequence.pop()
                     sequence = sequence[:-3]
                     window['text'].update(sequence)
+                    if len(self.sequence) == 1:
+                        print(f'[ ] {self.sequence[0]} has been deleted.')
+                        self.sequence.pop()
+                        continue
+                    print(f'[ ] {self.sequence[-1]} has been deleted.')
+                    self.sequence.pop()
                 except:
-                    print("There is no sequence to delete")
+                    print("[!] There is no sequence to delete")
 
             if event == "Display Phases' Diagram" and check:
                 toggle_bool2 = not toggle_bool2
                 im = os.path.join(path, 'Plots/phases_diagram.png')
                 window['-IMAGE-'].update(im, visible = toggle_bool2)
                 window['image_column'].update(visible = toggle_bool2 or toggle_bool3)
+                print(">>> Phases' Diagram has been displayed.")
+            elif event == "Display Phases' Diagram" and not check:
+                print("[!] No available sequence to be displayed. Please insert the sequence first.")
 
             if event == 'show_plc':
                 toggle_bool1 = not toggle_bool1
@@ -161,4 +177,10 @@ class Gui():
                 window['table'].update(self.data, visible = toggle_bool3)
                 window['image_column'].update(visible = toggle_bool3 or toggle_bool2)
 
+            if event == 'Create Ladder Logic':
+                output = LD().output
+                print(f"[+] Created {output}.xml in the {path} folder. Click Import LD to import it in CODESYS.")
+
         window.close()
+
+Gui().gui_mode()

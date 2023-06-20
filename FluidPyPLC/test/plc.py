@@ -102,7 +102,6 @@ class Plc():
                 solenoids[i] = "AB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
                 plc_seen_IO.append(solenoids[i])
                 plc_index_8bit += 1
-        print(plc_groups)
         plc_range_8bit = 0
         plc_index_8bit = 1
         plc_seen_IO_description = []
@@ -156,7 +155,7 @@ class Plc():
 
             #---------------FIRST GROUP-----------------------
             #------------------START--------------------------
-            f.write('\nIF EB0.0 THEN\n')
+            f.write('\nIF EB0.0 THEN\n\n')
             # IF statement *
             f.write(f'IF EB0.0 AND {limit_switches[-1]} AND NOT {relay_memory_label[0]} ')
             for i in range(1, number_of_memories):
