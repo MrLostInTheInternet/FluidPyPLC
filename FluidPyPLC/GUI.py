@@ -178,7 +178,9 @@ class Gui():
                 window['image_column'].update(visible = toggle_bool3 or toggle_bool2)
 
             if event == 'Create Ladder Logic':
-                output = LD().output
-                print(f"[+] Created {output}.xml in the {path} folder. Click Import LD to import it in CODESYS.")
-
+                if self.sequence:
+                    output = LD().output
+                    print(f"[+] Created {output}.xml in the {path} folder. Click Import LD to import it in CODESYS.")
+                else:
+                    print('[!] There is no sequence submitted. Please insert the sequence first.')
         window.close()

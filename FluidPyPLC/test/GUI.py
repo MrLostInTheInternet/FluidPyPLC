@@ -63,7 +63,7 @@ class Gui():
                     [sg.Text('Insert stroke: ', size = (13, 1)), sg.Input(key = 'input', size = (3, 1), text_color='Black', background_color='White', pad=(10,1)), sg.Text('E.g. A+, b-, etc..',expand_x = True, text_color = 'White', justification='right')],
                     [sg.Button('Finish', size =(10, 1), button_color='Green', mouseover_colors=('Black', 'White'), pad=(3, 20)), sg.Button('Clear', size = (10, 1)), sg.Button('Delete', size = (10, 1)), sg.Button("Display Phases' Diagram", expand_x = True, mouseover_colors=('Black', 'White'), expand_y = False, button_color = ('Black','Gray'))],
                     [sg.Checkbox('Show PLC ST code', enable_events=True, key = 'show_plc'), sg.Checkbox('Show Data', enable_events=True, key = 'data', expand_x=True), sg.Button("Create Ladder Logic", size=(20, 1), mouseover_colors=('Black', 'White'), expand_y = False, button_color = ('Black','Gray'))],
-                    [sg.Output(expand_x=True, size=(0, 6), pad=(10,2), key='log', background_color="Light Gray", text_color="Black")],
+                    [sg.Output(expand_x=True, size=(0, 6), pad=(10,2), key='log', background_color="Light Gray", text_color="Black", font="Hack")],
                     [collapse(section, 'plc', False)],
                 ]
 
@@ -75,9 +75,6 @@ class Gui():
             ]
         ]
 
-        window = sg.Window('GUI', layout, finalize = True)
-        window['input'].bind("<Return>", "_Enter")
-
         sequence = ''
         Text = ''
         toggle_bool1 = False
@@ -86,6 +83,10 @@ class Gui():
         check = False
         get_version = pkg_resources.get_distribution('FluidPyPLC')
         version = get_version.version
+
+        window = sg.Window(f'FluidPyPLC v{version}', layout, finalize = True)
+        window['input'].bind("<Return>", "_Enter")
+
 
         print(f'>> Welcome to FluidPyPLC v{version}\n\n')
         while True:
@@ -163,7 +164,10 @@ class Gui():
                 im = os.path.join(path, 'Plots/phases_diagram.png')
                 window['-IMAGE-'].update(im, visible = toggle_bool2)
                 window['image_column'].update(visible = toggle_bool2 or toggle_bool3)
-                print(">>> Phases' Diagram has been displayed.")
+                if toggle_bool2:
+                    print(">>> Phases' Diagram has been displayed.")
+                else:
+                    print("[!] No available sequence to be displayed. Please insert the sequence first.")
             elif event == "Display Phases' Diagram" and not check:
                 print("[!] No available sequence to be displayed. Please insert the sequence first.")
 
