@@ -163,7 +163,6 @@ class Gui():
                 im = os.path.join(path, 'Plots/phases_diagram.png')
                 window['-IMAGE-'].update(im, visible = toggle_bool2)
                 window['image_column'].update(visible = toggle_bool2 or toggle_bool3)
-                print(">>> Phases' Diagram has been displayed.")
             elif event == "Display Phases' Diagram" and not check:
                 print("[!] No available sequence to be displayed. Please insert the sequence first.")
 
