@@ -37,7 +37,7 @@ winget install python3 python3-pip
 ```
 For Linux users you can install it via apt:
 ```bash
-sudo apt-get install python3 python3-pip
+sudo apt-get install python3 python3-pip python3-tk
 ```
 ## ⬇️ Installation <a name="installation"></a>
 Use pip to install FluidPyPLC:
