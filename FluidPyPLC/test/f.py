@@ -45,10 +45,12 @@ def create_folders(folder_path):
 
 # function to start the terminal version
 def terminal():
+    print("Insert '/' to finish the sequence:\n")
     sequence = Sequence()
     s = sequence.s
     diagrams(s)
     Plc(s)
+    print(f"The plc ST code was created in the following folder: '{path}'")
 
 # args management
 def main():

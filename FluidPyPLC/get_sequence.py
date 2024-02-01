@@ -19,7 +19,7 @@ def stroke_handler(stroke):
 def sequence_append(stroke, s):
     s.append(stroke.upper())
         
-# continuous check of the sequence, by checking if the strokes are inserted correctly or they are repeated in the same position as the last one   
+# continuous check of the sequence, by checking if the strokes are inserted correctly or they are repeated in the same position as the last one
 def sequence_handler(stroke, s):
     if stroke.upper() not in s:
         return True
@@ -55,7 +55,7 @@ class Sequence():
             if stroke == "/" and close_sequence:
                 break
             check_stroke = stroke_handler(stroke)
-            if check_stroke:        
+            if check_stroke:
                 check_sequence = sequence_handler(stroke, self.s)
             if check_stroke and check_sequence:
                 sequence_append(stroke, self.s)
