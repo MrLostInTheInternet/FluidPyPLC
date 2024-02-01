@@ -43,6 +43,7 @@ sudo apt-get install python3 python3-pip python3-tk
 Use pip to install FluidPyPLC:
 ```bash
 pip install FluidPyPLC
+pip install setuptools
 ```
 
 Now you need to set a main folder where to save your data, and you need to create there the Plot and the plc folder. You can do it manually or you can use:
