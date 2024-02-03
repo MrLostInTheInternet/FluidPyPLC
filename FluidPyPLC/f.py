@@ -1,19 +1,12 @@
 #!/usr/bin/env python3
 
-# f.py is the main of FluidPyPLC project.
-# This script will help you analyze your sequence.
-# It will create the folders for storing your data files.
-# You can copy and paste the created plc.st code into any PLC programming software.
-# You can also convert the plc.st code into PLCopenXML output.xml file.
-# You can import the PLCopenXML .xml file into CODESYS and it will start right away.
-# Enjoy my little project. Thanks to all for the support.
-
 from tkinter import *
+from PIL import Image, ImageTk
 
-from FluidPyPLC.get_sequence import Sequence
-from FluidPyPLC.diagrams import diagrams
-from FluidPyPLC.plc import Plc
-from FluidPyPLC.GUI import Gui
+from get_sequence import Sequence
+from diagrams import diagrams
+from plc import Plc
+from GUI import Gui
 
 import argparse
 import json
@@ -54,7 +47,8 @@ def create_folders(folder_path):
 def terminal():
     print("Insert '/' to finish the sequence:\n")
     sequence = Sequence()
-    s = sequence.s
+    sequence.run()
+    s = sequence.sequence
     diagrams(s)
     Plc(s)
     print(f"The plc ST code was created in the following folder: '{path}'")
@@ -82,7 +76,7 @@ def main():
     if args.gui:
         # gui mode
         gui = Gui()
-        gui.gui_mode()
+        gui.run()
         exit(0)
     elif args.terminal:
         # terminal mode
@@ -100,3 +94,6 @@ def main():
         # default argument
         terminal()
         exit(0)
+
+if __name__ == "__main__":
+    main()
