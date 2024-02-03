@@ -47,7 +47,8 @@ def create_folders(folder_path):
 def terminal():
     print("Insert '/' to finish the sequence:\n")
     sequence = Sequence()
-    s = sequence.s
+    sequence.run()
+    s = sequence.sequence
     diagrams(s)
     Plc(s)
     print(f"The plc ST code was created in the following folder: '{path}'")
@@ -75,7 +76,7 @@ def main():
     if args.gui:
         # gui mode
         gui = Gui()
-        gui.gui_mode()
+        gui.run()
         exit(0)
     elif args.terminal:
         # terminal mode

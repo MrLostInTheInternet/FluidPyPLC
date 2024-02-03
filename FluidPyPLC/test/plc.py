@@ -3,8 +3,8 @@ import json
 import os
 import pkg_resources
 
-from data import Data
-from set_switches import rotate
+from FluidPyPLC.data import Data
+from FluidPyPLC.set_switches import rotate
 
 config_file_path = pkg_resources.resource_filename('FluidPyPLC', 'resources/config.json')
 with open(config_file_path) as f:
@@ -91,11 +91,7 @@ class Plc():
                 plc_seen_IO_description.append(solenoids[i])
                 plc_index_8bit = 1
                 plc_range_8bit += 1
-                if merge:
-                    len_g = g + 1
-                else:
-                    len_g = g
-                for j in range(len_g):
+                for j in range(len(d.groups)):
                     for z in range(len(plc_groups[j])):
                         if solenoids[i] in plc_groups[j][z]:
                             plc_groups[j][z] = "AB" + str(plc_range_8bit) + "." + str(plc_index_8bit)
@@ -187,7 +183,7 @@ class Plc():
                 f.write(f'{relay_memory_label[0]} := TRUE;\n\t')
                 f.write('END_IF;\n')
                 # then we need to close the IF statement *
-                f.write('\nEND_IF;\n\n')
+                f.write('END_IF;\n\n')
             else:
                 # if the first group is composed by just one stroke then we pass to the next group by activating the first memory
                 stroke_index = 1
@@ -199,7 +195,7 @@ class Plc():
             # first group is Done!
 
             # first memory relay activation
-            f.write(f'\nIF {relay_memory_label[0]} THEN\n')
+            f.write(f'IF {relay_memory_label[0]} THEN\n')
             if merge:
                 # if the last group can be merged with the first one, then we include those strokes
                 merged_groups = []
@@ -228,7 +224,7 @@ class Plc():
             stroke_index = stroke_index_return
             for j in range(number_of_memories):
                 finish_group = 0
-                f.write(f'\nIF {relay_memory_label[j]} THEN\n\t')
+                f.write(f'IF {relay_memory_label[j]} THEN\n\t')
                 while finish_group < len(plc_groups[j + 1]):
                     # while the group isn't finished continue to write the triggered limit switches and solenoids
                     if finish_group != (len(plc_groups[j+1]) - 1):
