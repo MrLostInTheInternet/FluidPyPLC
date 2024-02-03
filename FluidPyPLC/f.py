@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
 
-from tkinter import *
-from PIL import Image, ImageTk
+# f.py is the main of FluidPyPLC project.
+# This script will help you analyze your sequence.
+# It will create the folders for storing your data files.
+# You can copy and paste the created plc.st code into any PLC programming software.
+# You can also convert the plc.st code into PLCopenXML output.xml file.
+# You can import the PLCopenXML .xml file into CODESYS and it will start right away.
+# Enjoy my little project. Thanks to all for the support.
 
-from get_sequence import Sequence
-from diagrams import diagrams
-from plc import Plc
-from GUI import Gui
+from tkinter import *
+
+from FluidPyPLC.get_sequence import Sequence
+from FluidPyPLC.diagrams import diagrams
+from FluidPyPLC.plc import Plc
+from FluidPyPLC.GUI import Gui
 
 import argparse
 import json

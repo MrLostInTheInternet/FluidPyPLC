@@ -1,8 +1,8 @@
-from get_sequence import *
-from data import Data
-from plc import Plc
-from diagrams import diagrams
-from ld import LD
+from FluidPyPLC.get_sequence import *
+from FluidPyPLC.data import Data
+from FluidPyPLC.plc import Plc
+from FluidPyPLC.diagrams import diagrams
+from FluidPyPLC.LadderLogic.ld import LD
 
 import json
 import os

@@ -1,6 +1,5 @@
-from set_groups import Groups
-from set_switches import Switches
-from copy import deepcopy
+from FluidPyPLC.set_groups import Groups
+from FluidPyPLC.set_switches import Switches
 
 # get the number of pistons and their labels
 def pistons(s):
