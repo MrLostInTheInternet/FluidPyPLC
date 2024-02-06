@@ -196,6 +196,10 @@ class Gui():
             self.window['image_column'].update(visible=self.toggle_bool3 or self.toggle_bool2)
 
         if event == 'Create Ladder Logic':
-            output = LD().output
-            print(f"[+] Created {output}.xml in the {self.path} folder. Click Import LD to import it in CODESYS.")
+            if self.sequence_manager.sequence:
+                output = LD().output
+                print(f"[+] Created {output}.xml in the {self.path} folder. Click Import LD to import it in CODESYS.")
+            else:
+                print(f"[!] No available sequence to be displayed. Please insert the sequence first.")
+
 
