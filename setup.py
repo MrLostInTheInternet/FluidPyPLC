@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-VERSION = '0.2.2'
+VERSION = '0.2.1'
 DESCRIPTION = 'FluidSim Circuits Analyzer & PLC ST Code Generator'
 
 # Setting up
