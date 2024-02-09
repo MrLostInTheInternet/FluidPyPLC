@@ -7,6 +7,7 @@
     Updated version of FluidPy</p>
 </p>
 
+[![Downloads](https://static.pepy.tech/badge/FluidPyPLC)](https://pepy.tech/project/FluidPyPLC)
 <p align="center">
     
 </p>
