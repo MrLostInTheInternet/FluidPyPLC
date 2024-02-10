@@ -11,7 +11,8 @@ class Sequence:
                 break
 
             stroke_check = self.stroke_handler(stroke)
-            if stroke_check and self.sequence_handler(stroke):
+            sequence_check = self.sequence_handler(stroke)
+            if stroke_check and sequence_check:
                 self.sequence_append(stroke)
 
     def stroke_handler(self, stroke):
