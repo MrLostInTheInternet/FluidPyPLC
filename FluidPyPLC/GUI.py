@@ -5,6 +5,7 @@ from FluidPyPLC.diagrams import diagrams
 from FluidPyPLC.LadderLogic.ld import LD
 from tkinter import ttk
 from ttkbootstrap import Style
+from PIL import Image, ImageTk
 
 import json
 import os
