@@ -5,6 +5,7 @@ from FluidPyPLC.diagrams import diagrams
 from FluidPyPLC.LadderLogic.ld import LD
 from tkinter import ttk
 from ttkbootstrap import Style
+from PIL import Image, ImageTk
 
 import json
 import os
@@ -23,8 +24,8 @@ class Gui():
         self.root.title(f'FluidPyPLC v{self.version}')
         self.style = Style(theme='litera')
 
-        icon_path = "favicon.ico"  # Change this to the path of your icon file
-        self.root.iconbitmap(default=icon_path)
+        #icon_path = "favicon.ico"  # Change this to the path of your icon file
+        #self.root.iconbitmap(default=icon_path)
 
         # Create the main layout
         self.create_layout()
