@@ -23,8 +23,8 @@ class Gui():
         self.root.title(f'FluidPyPLC v{self.version}')
         self.style = Style(theme='litera')
 
-        icon_path = "favicon.ico"  # Change this to the path of your icon file
-        self.root.iconbitmap(default=icon_path)
+        #icon_path = "favicon.ico"  # Change this to the path of your icon file
+        #self.root.iconbitmap(default=icon_path)
 
         # Create the main layout
         self.create_layout()
