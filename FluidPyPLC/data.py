@@ -18,14 +18,20 @@ def check_for_loops(s):
 
 # function to understand which limit switches are held down from the beginning, e.g. the limit switches normally open, are closed
 def lswitch_boolean(limit_switches):
-    seen_letter = set()
-    lswitch_bool = []
-    for switch in limit_switches:
-        if switch[0] not in seen_letter:
+    lswitch_bool = ['TRUE',]
+    seen_letter = []
+    seen_switch = []
+    for i in range(1, len(limit_switches)):
+        limit_switch = limit_switches[i]
+        if limit_switch[0] not in seen_letter:
+            seen_letter.append(limit_switch[0])
+            seen_switch.append(limit_switch)
             lswitch_bool.append('FALSE')
-            seen_letter.add(switch[0])
         else:
-            lswitch_bool.append('TRUE')
+            if limit_switch not in seen_switch:
+                lswitch_bool.append('TRUE')
+            else:
+                lswitch_bool.append('FALSE')
     return lswitch_bool
 
 # stored data

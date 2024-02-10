@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from tkinter import *
-from PIL import Image, ImageTk
+import tkinter as tk
 
 from get_sequence import Sequence
 from diagrams import diagrams
@@ -26,22 +26,26 @@ except Exception as e:
 
 
 def create_folders(folder_path):
-    plots_folder = os.path.join(folder_path, 'Plots')
-    plc_folder = os.path.join(folder_path, 'plc')
+    try:
+        plots_folder = os.path.join(folder_path, 'Plots')
+        plc_folder = os.path.join(folder_path, 'plc')
 
-    # Create the Plots and plc folders
-    os.makedirs(plots_folder, exist_ok=True)
-    os.makedirs(plc_folder, exist_ok=True)
+        # Create the Plots and plc folders
+        os.makedirs(plots_folder, exist_ok=True)
+        os.makedirs(plc_folder, exist_ok=True)
 
-    print(f"Created 'Plots' and 'plc' folders inside '{folder_path}'.")
+        print(f"Created 'Plots' and 'plc' folders inside '{folder_path}'.")
 
-    # Set this path to the config.json file
-    with open(config_file_path) as f:
-        config = json.load(f)
-    config["folder_path"] = folder_path
+        # Set this path to the config.json file
+        with open(config_file_path) as f:
+            config = json.load(f)
+        config["folder_path"] = folder_path
 
-    with open(config_file_path, 'w') as f:
-        json.dump(config, f, indent=4)
+        with open(config_file_path, 'w') as f:
+            json.dump(config, f, indent=4)
+    except Exception as e:
+        print(f"An error occured: {e}")
+
 
 # function to start the terminal version
 def terminal():
@@ -75,7 +79,8 @@ def main():
         exit(0)
     if args.gui:
         # gui mode
-        gui = Gui()
+        root = tk.Tk()
+        gui = Gui(root)
         gui.run()
         exit(0)
     elif args.terminal:
