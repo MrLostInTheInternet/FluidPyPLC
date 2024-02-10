@@ -59,6 +59,8 @@ Target: fluidpy.exe --gui
 ```
 Windows will automatically locate the fluidpy.exe script in your Python/scripts folder and you can launch the app from your icon now.
 
+If fluidpy.exe is not recognize as a command, you have to add the Python/scripts to your PATH, locate then your Python/scripts folder on your computer, copy the path and add it to the PATH ENV Variables.
+
 [Use my favicon if you want]
 ## 🎈 Usage <a name="usage"></a>
 You can invoke the command from anywhere on your terminal:
