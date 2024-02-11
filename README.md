@@ -13,13 +13,24 @@
 [![Downloads](https://static.pepy.tech/badge/FluidPyPLC/month)](https://pepy.tech/project/FluidPyPLC)
 ![Python Version](https://img.shields.io/pypi/pyversions/FluidPyPLC.svg)
 
+<div align="center">
+  <h4>
+    <a href="/CONTRIBUTING.md">
+      👥 Contributing
+    </a>
+    <a href="/LICENSE">
+      License
+    </a>
+  </h4>
+</div>
+
 # Simulation
 <p align="center">
     <img alt="UI" src="https://github.com/MrLostInTheInternet/FluidPyPLC/blob/main/assets/newUi.png" style="width:650px" align="left">
     <img alt="FluidSim" src="https://github.com/MrLostInTheInternet/FluidPyPLC/blob/main/assets/FluidSim.gif" style="width:275px;" align="right">
     <img alt="FluidSim" src="https://github.com/MrLostInTheInternet/FluidPyPLC/blob/main/assets/newUI_fluidsim_related.png" style="width:275px;" align="right">
 </p>
-<br clear="all"/> 
+<br clear="all"/>
 
 # Table of Contents
 - [Table of Contents](#table-of-contents)
