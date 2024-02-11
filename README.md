@@ -19,7 +19,7 @@
       👥 Contributing
     </a>
     <a href="/LICENSE">
-      License
+      📄License
     </a>
   </h4>
 </div>
