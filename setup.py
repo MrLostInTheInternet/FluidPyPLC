@@ -1,6 +1,9 @@
 from setuptools import setup, find_packages
 
-VERSION = '0.3.2'
+with open('README.md', encoding='utf-8') as f:
+    long_description = f.read()
+
+VERSION = '0.3.301'
 DESCRIPTION = 'FluidSim Circuits Analyzer & PLC ST Code Generator'
 
 # Setting up
@@ -11,6 +14,8 @@ setup(
     author_email="<eugen.iofciuvasile@hotmail.com>",
     license="GPLv3",
     description=DESCRIPTION,
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     url="https://github.com/MrLostInTheInternet/FluidPyPLC",
     packages=find_packages(),
     package_data={

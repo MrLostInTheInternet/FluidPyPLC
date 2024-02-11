@@ -8,9 +8,18 @@
 </p>
 
 [![Downloads](https://static.pepy.tech/badge/FluidPyPLC)](https://pepy.tech/project/FluidPyPLC)
+![PyPI version](https://img.shields.io/pypi/v/FluidPyPLC.svg)
+![License](https://img.shields.io/pypi/l/FluidPyPLC.svg)
+[![Downloads](https://static.pepy.tech/badge/FluidPyPLC/month)](https://pepy.tech/project/FluidPyPLC)
+![Python Version](https://img.shields.io/pypi/pyversions/FluidPyPLC.svg)
+
+# Simulation
 <p align="center">
-    
+    <img alt="UI" src="https://github.com/MrLostInTheInternet/FluidPyPLC/blob/main/assets/newUi.png" style="width:650px" align="left">
+    <img alt="FluidSim" src="https://github.com/MrLostInTheInternet/FluidPyPLC/blob/main/assets/FluidSim.gif" style="width:275px;" align="right">
+    <img alt="FluidSim" src="https://github.com/MrLostInTheInternet/FluidPyPLC/blob/main/assets/newUI_fluidsim_related.png" style="width:275px;" align="right">
 </p>
+<br clear="all"/> 
 
 # Table of Contents
 - [Table of Contents](#table-of-contents)
