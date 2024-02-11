@@ -8,6 +8,10 @@
 </p>
 
 [![Downloads](https://static.pepy.tech/badge/FluidPyPLC)](https://pepy.tech/project/FluidPyPLC)
+![PyPI version](https://img.shields.io/pypi/v/FluidPyPLC.svg)
+![License](https://img.shields.io/pypi/l/FluidPyPLC.svg)
+[![Downloads](https://static.pepy.tech/badge/FluidPyPLC/month)](https://pepy.tech/project/FluidPyPLC)
+![Python Version](https://img.shields.io/pypi/pyversions/FluidPyPLC.svg)
 
 # Simulation
 <p align="center">
