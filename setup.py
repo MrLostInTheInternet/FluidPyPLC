@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 
-VERSION = '0.3.302'
+VERSION = '0.3.500'
 DESCRIPTION = 'FluidSim Circuits Analyzer & PLC ST Code Generator'
 
 # Setting up

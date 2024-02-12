@@ -1,4 +1,12 @@
 import tkinter as tk
+
+import sys
+import io
+import json
+import os
+import pkg_resources
+import subprocess
+
 from tkinter import ttk
 from ttkbootstrap import Style
 from PIL import Image, ImageTk
@@ -7,12 +15,6 @@ from data import Data
 from plc import Plc
 from diagrams import diagrams
 from ld import LD
-
-import sys
-import io
-import json
-import os
-import pkg_resources
 
 class Gui():
     def __init__(self, root):
@@ -23,17 +25,22 @@ class Gui():
         self.root = root
         self.root.title(f'FluidPyPLC v{self.version}')
         self.style = Style(theme='litera')
+        self.root.resizable(False, False)
 
         icon_path = "../favicon.ico"  # Change this to the path of your icon file
         self.root.iconbitmap(default=icon_path)
 
+        self.toggle_data = True
+        self.toggle_plot = True
+        self.toggle_plc_code = True
+        self.text = ''
+    
         # Create the main layout
         self.create_layout()
         self.data_table.grid_forget()
         self.diagram_plot.grid_forget()
-        self.toggle_data_table = True
-        self.toggle_plot = True
-        self.text = ''
+        self.open_plot_button.grid_forget()
+        self.plc_text.grid_forget()
 
         self.stdout_capture = StdoutCapture()
 
@@ -144,30 +151,52 @@ class Gui():
         ttk.Button(left_frame, text='Toggle Diagram\'s Phases', style='primary.Outline.TButton', command=self.toggle_image_png).grid(row=3, column=1, pady=5)
         ttk.Button(left_frame, text='Create Ladder Logic', style='primary.Outline.TButton', command=self.create_ld_output).grid(row=3, column=2, pady=5)
 
+
         self.log_text = tk.Text(left_frame, height=6)
         self.log_text.grid(row=4, column=0, columnspan=4, sticky='ew', pady=5)
 
+        ttk.Button(left_frame, text='Show PLC Code', style='primary.Outline.TButton', command=self.toggle_plc_text).grid(row=5, column=0, pady=5)
         self.plc_text = tk.Text(left_frame, height=30, width=50)
-        self.plc_text.grid(row=5, column=0, columnspan=4, sticky='ew', pady=5)
+        self.plc_text.grid(row=6, column=0, columnspan=4, sticky='ew', pady=5)
 
         # Right side layout (image viewer and table)
         right_frame = ttk.Frame(self.root)
         right_frame.grid(row=0, column=1, sticky='nsew', padx=10, pady=10)
+
         # Image Placeholder
         self.diagram_plot = tk.Label(right_frame, text="Diagram Phases Image", relief="ridge")
         self.diagram_plot.grid(row=0, column=0, sticky='nsew')
+
+        self.open_plot_button = ttk.Button(right_frame, text='Open Plots folder', command=self.open_plots_folder)
+        self.open_plot_button.grid(row=0, column=1, sticky='se', padx=10, pady=10)
 
         headings = ('N° of Blocks', 'Groups', 'N° of Memories', 'Relay Memories', 'Switch Enabled', 'Switch Disabled')
         self.data_table = ttk.Treeview(right_frame, columns=headings, show='headings')
         for heading in headings:
             self.data_table.heading(heading, text=heading)
             self.data_table.column(heading, width=100)  # Set column width
-        self.data_table.grid(row=1, column=0, sticky='nsew')
+        self.data_table.grid(row=2, column=0, sticky='nsew')
 
         # Add scrollbar for the data table
         scrollbar = ttk.Scrollbar(right_frame, orient="vertical", command=self.data_table.yview)
-        scrollbar.grid(row=1, column=1, sticky='ns')
+        scrollbar.grid(row=2, column=1, sticky='ns')
         self.data_table.configure(yscrollcommand=scrollbar.set)
+
+    def open_plots_folder(self):
+        try:
+            plots_folder_path = os.path.join(self.path, 'Plots')
+            if os.path.exists(plots_folder_path):
+                match sys.platform:
+                    case "darwin":  # MacOS
+                        subprocess.call(['open', plots_folder_path])
+                    case "win32":   # Windows
+                        os.startfile(plots_folder_path)
+                    case _:
+                        subprocess.call(['xdg-open', plots_folder_path])  # Linux, Unix, etc.
+            else:
+                self.log_text.insert(tk.END, "Plots folder not found.\n")
+        except Exception as e:
+            self.log_text.insert(tk.END, f"Error opening plots folder: {e}\n")
 
     def clear_stdout(self):
         sys.stdout = io.StringIO()
@@ -228,18 +257,27 @@ class Gui():
             self.log_text.insert(tk.END, f"Error displaying diagram phases image: {e}\n")
 
     def toggle_data_table(self):
-        if self.toggle_data_table:
-            self.data_table.grid(row=1, column=0, sticky='nsew')
+        if self.toggle_data:
+            self.data_table.grid(row=2, column=0, sticky='nsew')
         else:
             self.data_table.grid_forget()
-        self.toggle_data_table = not self.toggle_data_table
+        self.toggle_data = not self.toggle_data
 
     def toggle_image_png(self):
         if self.toggle_plot:
             self.diagram_plot.grid(row=0, column=0, sticky='nsew')
+            self.open_plot_button.grid(row=1, column=0, sticky='se', padx=10, pady=10)
         else:
             self.diagram_plot.grid_forget()
+            self.open_plot_button.grid_remove()
         self.toggle_plot = not self.toggle_plot
+
+    def toggle_plc_text(self):
+        if self.toggle_plc_code:
+            self.plc_text.grid(row=6, column=0, columnspan=4, sticky='ew', pady=5)
+        else:
+            self.plc_text.grid_forget()
+        self.toggle_plc_code = not self.toggle_plc_code
 
     def create_ld_output(self):
         if self.sequence_manager.sequence:
