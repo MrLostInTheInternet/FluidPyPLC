@@ -25,10 +25,7 @@ class Gui():
         self.root.title(f'FluidPyPLC v{self.version}')
         self.style = Style(theme='litera')
         self.root.resizable(False, False)
-
-        icon_path = "../favicon.ico"  # Change this to the path of your icon file
-        self.root.iconbitmap(default=icon_path)
-
+        
         self.toggle_data = True
         self.toggle_plot = True
         self.toggle_plc_code = True
