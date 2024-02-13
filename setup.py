@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 
-VERSION = '0.3.6'
+VERSION = '0.3.7'
 DESCRIPTION = 'FluidSim Circuits Analyzer & PLC ST Code Generator'
 
 # Setting up
@@ -29,7 +29,7 @@ setup(
         ]},
     keywords=['python', 'plc', 'fluidsim', 'structured text', 'plc python', 'codesys', 'circuits', 'pneumatics', 'oleodynamics', 'plc programming'],
     classifiers=[
-        "Development Status :: 1 - Planning",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "Programming Language :: Python :: 3",
         "Operating System :: Unix",
