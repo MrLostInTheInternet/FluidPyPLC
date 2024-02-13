@@ -25,7 +25,6 @@ class Gui():
         self.root.title(f'FluidPyPLC v{self.version}')
         self.style = Style(theme='litera')
         self.root.resizable(False, False)
-
         self.toggle_data = True
         self.toggle_plot = True
         self.toggle_plc_code = True

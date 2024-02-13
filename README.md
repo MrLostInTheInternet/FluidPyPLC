@@ -3,14 +3,17 @@
         🔗 FluidPyPLC
     </h1>
     <p align="center">
-    Analyzer of Circuits' Sequences. PLC ST code Generator <br>
-    Updated version of FluidPy</p>
+    Analyzer of Circuits' Sequences
+    <br/>
+    PLC ST code Generator <br>
+    Ladder Logic converter</p>
 </p>
 
 [![Downloads](https://static.pepy.tech/badge/FluidPyPLC)](https://pepy.tech/project/FluidPyPLC)
 ![PyPI version](https://img.shields.io/pypi/v/FluidPyPLC.svg)
 [![Snyk Vulnerabilities](https://snyk.io/advisor/python/FluidPyPLC/badge.svg)](https://snyk.io/advisor/python/FluidPyPLC)
 ![License](https://img.shields.io/pypi/l/FluidPyPLC.svg)
+[![PyPI Downloads](https://img.shields.io/pypi/dd/FluidPyPLC.svg)](https://pypi.org/project/FluidPyPLC/)
 [![Downloads](https://static.pepy.tech/badge/FluidPyPLC/month)](https://pepy.tech/project/FluidPyPLC)
 ![Python Version](https://img.shields.io/pypi/pyversions/FluidPyPLC.svg)
 
