@@ -26,9 +26,6 @@ class Gui():
         self.style = Style(theme='litera')
         self.root.resizable(False, False)
 
-        icon_path = "../favicon.ico"  # Change this to the path of your icon file
-        self.root.iconbitmap(default=icon_path)
-
         self.toggle_data = True
         self.toggle_plot = True
         self.toggle_plc_code = True
@@ -36,10 +33,21 @@ class Gui():
     
         # Create the main layout
         self.create_layout()
-        self.data_table.grid_forget()
-        self.diagram_plot.grid_forget()
-        self.open_plot_button.grid_forget()
-        self.plc_text.grid_forget()
+        self.data_table.grid_remove()
+        self.diagram_plot.grid_remove()
+        self.open_plot_button.grid_remove()
+        self.plc_var_local_text.grid_remove()
+        self.plc_var_global_text.grid_remove()
+        self.plc_connections_text.grid_remove()
+        self.plc_logic_groups_text.grid_remove()
+        self.copy_local_var_button.grid_remove()
+        self.copy_var_global_button.grid_remove()
+        self.copy_connections_button.grid_remove()
+        self.copy_plc_code_button.grid_remove()
+        self.var_local_text_label.grid_remove()
+        self.var_global_text_label.grid_remove()
+        self.plc_connections_text_label.grid_remove()
+        self.plc_code_text_label.grid_remove()
 
         self.stdout_capture = StdoutCapture()
 
@@ -132,31 +140,65 @@ class Gui():
         left_frame = ttk.Frame(self.root)
         left_frame.grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
 
-        ttk.Label(left_frame, text='Sequence:', style='Info.TLabel').grid(row=0, column=0, sticky='w')
+        ttk.Label(left_frame, text='Sequence:', style='Info.TLabel').grid(row=0, column=0, sticky='w', padx=5)
         self.sequence_text = ttk.Label(left_frame, text='', style='Info.TLabel')
-        self.sequence_text.grid(row=0, column=1, sticky='w')
+        self.sequence_text.grid(row=0, column=1, sticky='w', padx=5)
 
-        ttk.Label(left_frame, text='Insert stroke: ', style='Info.TLabel').grid(row=1, column=0, sticky='w')
+        ttk.Label(left_frame, text='Insert stroke: ', style='Info.TLabel').grid(row=1, column=0, sticky='w', padx=5)
         self.input_entry = ttk.Entry(left_frame)
         self.input_entry.grid(row=1, column=1, sticky='ew')
-        ttk.Label(left_frame, text='E.g. A+, b-, etc..', style='Info.TLabel').grid(row=1, column=2, sticky='e')
+        ttk.Label(left_frame, text='E.g. A+, b-, etc..', style='Info.TLabel').grid(row=1, column=2, sticky='e', padx=5)
 
         self.input_entry.bind("<Return>", lambda event: self.process_input())
 
-        ttk.Button(left_frame, text='Finish', style='success.TButton', command=self.finish_sequence).grid(row=2, column=0, pady=5)
-        ttk.Button(left_frame, text='Clear', style='warning.TButton', command=self.clear_data).grid(row=2, column=1, pady=5)
-        ttk.Button(left_frame, text='Delete', style='danger.TButton', command=self.delete_sequence).grid(row=2, column=2, pady=5)
-        ttk.Button(left_frame, text='Toggle Data Table', style='primary.Outline.TButton', command=self.toggle_data_table).grid(row=3, column=0, pady=5)
-        ttk.Button(left_frame, text='Toggle Diagram\'s Phases', style='primary.Outline.TButton', command=self.toggle_image_png).grid(row=3, column=1, pady=5)
-        ttk.Button(left_frame, text='Create Ladder Logic', style='primary.Outline.TButton', command=self.create_ld_output).grid(row=3, column=2, pady=5)
+        ttk.Button(left_frame, text='Finish', style='success.TButton', command=self.finish_sequence).grid(row=2, column=0, sticky='ew', pady=5, padx=5)
+        ttk.Button(left_frame, text='Clear', style='warning.TButton', command=self.clear_data).grid(row=2, column=1, sticky='ew', pady=5, padx=5)
+        ttk.Button(left_frame, text='Delete', style='danger.TButton', command=self.delete_sequence).grid(row=2, column=2, columnspan=2, sticky='ew', pady=5, padx=5)
+        ttk.Button(left_frame, text='Toggle Data Table', style='primary.Outline.TButton', command=self.toggle_data_table).grid(row=3, column=0, sticky='ew', pady=5, padx=5)
+        ttk.Button(left_frame, text='Toggle Diagram\'s Phases', style='primary.Outline.TButton', command=self.toggle_image_png).grid(row=3, column=1, sticky='ew', pady=5, padx=5)
+        ttk.Button(left_frame, text='Create Ladder Logic', style='primary.Outline.TButton', command=self.create_ld_output).grid(row=3, column=2, sticky='ew', pady=5, padx=5)
+        ttk.Button(left_frame, text='Show PLC Code', style='primary.Outline.TButton', command=self.toggle_plc_text).grid(row=3, column=3, sticky='ew', pady=5, padx=5)
+
+        ttk.Label(left_frame, text='Log', style='Info.TLabel').grid(row=4, column=0, sticky='w', padx=5)
+        self.log_text = tk.Text(left_frame, height=6, width=70)
+        self.log_text.grid(row=5, column=0, columnspan=4, sticky='ew', pady=5, padx=5)
 
 
-        self.log_text = tk.Text(left_frame, height=6)
-        self.log_text.grid(row=4, column=0, columnspan=4, sticky='ew', pady=5)
+        self.var_local_text_label = ttk.Label(left_frame, text='Local Variables', style='Info.TLabel')
+        self.var_local_text_label.grid(row=6, column=0, sticky='w', padx=5)
 
-        ttk.Button(left_frame, text='Show PLC Code', style='primary.Outline.TButton', command=self.toggle_plc_text).grid(row=5, column=0, pady=5)
-        self.plc_text = tk.Text(left_frame, height=30, width=50)
-        self.plc_text.grid(row=6, column=0, columnspan=4, sticky='ew', pady=5)
+        self.var_global_text_label = ttk.Label(left_frame, text='Global Variables', style='Info.TLabel')
+        self.var_global_text_label.grid(row=6, column=1, sticky='w', padx=5)
+
+        self.plc_connections_text_label = ttk.Label(left_frame, text='Connections IO', style='Info.TLabel')
+        self.plc_connections_text_label.grid(row=6, column=2, sticky='w', padx=5)
+
+        self.plc_code_text_label = ttk.Label(left_frame, text='PLC Structured Text Code', style='Info.TLabel')
+        self.plc_code_text_label.grid(row=8, column=0, sticky='w', padx=5)
+        
+        self.plc_var_local_text = tk.Text(left_frame, height=13, width=20)
+        self.plc_var_local_text.grid(row=7, column=0, columnspan=1, sticky='ew', pady=5, padx=5)
+
+        self.plc_var_global_text = tk.Text(left_frame, height=13, width=20)
+        self.plc_var_global_text.grid(row=7, column=1, columnspan=1, sticky='ew', pady=5, padx=5)
+
+        self.plc_connections_text = tk.Text(left_frame, height=13, width=50)
+        self.plc_connections_text.grid(row=7, column=2, columnspan=2, sticky='ew', pady=5, padx=5)
+
+        self.plc_logic_groups_text = tk.Text(left_frame, height=16, width=70)
+        self.plc_logic_groups_text.grid(row=8, column=0, columnspan=4, sticky='ew', pady=5, padx=5)
+
+        self.copy_local_var_button = ttk.Button(left_frame, text='Copy', style='success.TButton', command=lambda: self.copy_to_clipboard(self.plc_var_local_text))
+        self.copy_local_var_button.grid(row=6, column=0, sticky='e', padx=5)
+
+        self.copy_var_global_button = ttk.Button(left_frame, text='Copy', style='success.TButton', command=lambda: self.copy_to_clipboard(self.plc_var_global_text))
+        self.copy_var_global_button.grid(row=6, column=1, sticky='e', padx=5)
+
+        self.copy_connections_button = ttk.Button(left_frame, text='Copy', style='success.TButton', command=lambda: self.copy_to_clipboard(self.plc_connections_text))
+        self.copy_connections_button.grid(row=6, column=3, sticky='e', padx=5)
+
+        self.copy_plc_code_button = ttk.Button(left_frame, text='Copy', style='success.TButton', command=lambda: self.copy_to_clipboard(self.plc_logic_groups_text))
+        self.copy_plc_code_button.grid(row=8, column=3, sticky='e', padx=5)
 
         # Right side layout (image viewer and table)
         right_frame = ttk.Frame(self.root)
@@ -205,7 +247,10 @@ class Gui():
         self.sequence_text.config(text='')
         self.diagram_plot.config(text='Diagram Phases Image')
         self.log_text.delete('1.0', tk.END)
-        self.plc_text.delete('1.0', tk.END)
+        self.plc_var_local_text.delete('1.0', tk.END)
+        self.plc_var_global_text.delete('1.0', tk.END)
+        self.plc_connections_text.delete('1.0', tk.END)
+        self.plc_logic_groups_text.delete('1.0', tk.END)
         self.data_table.delete(*self.data_table.get_children())
         self.log_text.insert(tk.END, ">>> Data cleared\n")
         self.clear_stdout()
@@ -228,13 +273,46 @@ class Gui():
             return
         self.data = self.elaborate_data()
         diagrams(self.sequence_manager.sequence)
+
         Plc(self.sequence_manager.sequence)
         dir1 = os.path.join(self.path, 'plc/plc.st')
+
         if os.path.exists(dir1):
             with open(dir1, 'r') as p:
-                self.text = p.read()
-            self.plc_text.delete('1.0', tk.END)
-            self.plc_text.insert(tk.END, self.text + '\n')
+                plc_content = p.readlines()
+            plc_var_local_text = ""
+            plc_var_global_text = ""
+            plc_connections_text = ""
+            plc_logic_groups_text = ""
+            current_section = ""
+            for line in plc_content:
+                if line.startswith("VAR_GLOBAL"):
+                    current_section = "global"
+                elif line.startswith("//"):
+                    current_section = "connections"
+                elif line.startswith("IF"):
+                    current_section = "logic_groups"
+
+                if current_section == "global":
+                    plc_var_global_text += line
+                elif current_section == "connections":
+                    plc_connections_text += line
+                elif current_section == "logic_groups":
+                    plc_logic_groups_text += line
+                else:
+                    plc_var_local_text += line
+
+            self.plc_var_local_text.delete('1.0', tk.END)
+            self.plc_var_local_text.insert(tk.END, plc_var_local_text + '\n')
+
+            self.plc_var_global_text.delete('1.0', tk.END)
+            self.plc_var_global_text.insert(tk.END, plc_var_global_text + '\n')
+
+            self.plc_connections_text.delete('1.0', tk.END)
+            self.plc_connections_text.insert(tk.END, plc_connections_text + '\n')
+
+            self.plc_logic_groups_text.delete('1.0', tk.END)
+            self.plc_logic_groups_text.insert(tk.END, plc_logic_groups_text + '\n')
         else:
             self.log_text.insert(tk.END, "No available sequence found.\n")
             self.toggle_bool1 = False
@@ -259,7 +337,7 @@ class Gui():
         if self.toggle_data:
             self.data_table.grid(row=2, column=0, sticky='nsew')
         else:
-            self.data_table.grid_forget()
+            self.data_table.grid_remove()
         self.toggle_data = not self.toggle_data
 
     def toggle_image_png(self):
@@ -267,15 +345,37 @@ class Gui():
             self.diagram_plot.grid(row=0, column=0, sticky='nsew')
             self.open_plot_button.grid(row=1, column=0, sticky='se', padx=10, pady=10)
         else:
-            self.diagram_plot.grid_forget()
+            self.diagram_plot.grid_remove()
             self.open_plot_button.grid_remove()
         self.toggle_plot = not self.toggle_plot
 
     def toggle_plc_text(self):
         if self.toggle_plc_code:
-            self.plc_text.grid(row=6, column=0, columnspan=4, sticky='ew', pady=5)
+            self.var_local_text_label.grid(row=6, column=0, sticky='w', padx=5)
+            self.var_global_text_label.grid(row=6, column=1, sticky='w', padx=5)
+            self.plc_connections_text_label.grid(row=6, column=2, sticky='w', padx=5)
+            self.plc_code_text_label.grid(row=8, column=0, sticky='w', padx=5)
+            self.copy_local_var_button.grid(row=6, column=0, sticky='e', padx=5)
+            self.copy_var_global_button.grid(row=6, column=1, sticky='e', padx=5)
+            self.copy_connections_button.grid(row=6, column=3, sticky='e', padx=5)
+            self.copy_plc_code_button.grid(row=8, column=3, sticky='e', padx=5)
+            self.plc_var_local_text.grid(row=7, column=0, columnspan=1, sticky='ew', pady=5, padx=5)
+            self.plc_var_global_text.grid(row=7, column=1, columnspan=1, sticky='ew', pady=5, padx=5)
+            self.plc_connections_text.grid(row=7, column=2, columnspan=2, sticky='ew', pady=5, padx=5)
+            self.plc_logic_groups_text.grid(row=9, column=0, columnspan=4, sticky='ew', pady=5, padx=5)
         else:
-            self.plc_text.grid_forget()
+            self.var_local_text_label.grid_remove()
+            self.var_global_text_label.grid_remove()
+            self.plc_connections_text_label.grid_remove()
+            self.plc_code_text_label.grid_remove()
+            self.copy_local_var_button.grid_remove()
+            self.copy_var_global_button.grid_remove()
+            self.copy_connections_button.grid_remove()
+            self.copy_plc_code_button.grid_remove()
+            self.plc_var_local_text.grid_remove()
+            self.plc_var_global_text.grid_remove()
+            self.plc_connections_text.grid_remove()
+            self.plc_logic_groups_text.grid_remove()
         self.toggle_plc_code = not self.toggle_plc_code
 
     def create_ld_output(self):
@@ -285,6 +385,11 @@ class Gui():
         else:
             self.log_text.insert(tk.END, "[!] No available sequence to be displayed. Please insert the sequence first.\n")
             
+    def copy_to_clipboard(self, text_box):
+        self.root.clipboard_clear()
+        content = text_box.get("1.0", "end-1c")
+        self.root.clipboard_append(content)
+
     def close_window(self):
         self.root.quit()
         self.root.destroy()
